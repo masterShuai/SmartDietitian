@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="test">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="test" />
+    <title>前端angularJS使用测试</title>
+
+    <script src="lib/angularJS/angular.min.js"></script>
+    <script src="js/testContorller.js"></script>
+</head>
+
+<body ng-controller="PhoneListCtrl">
+
+<ul>
+    <li ng-repeat="phone in phones">
+        {{phone.name}}
+        <p>{{phone.snippet}}</p>
+
+    </li>
+</ul>
+</body>
+</html>

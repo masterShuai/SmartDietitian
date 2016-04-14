@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Version: 1.0-SNAPSHOT
 Built-By: wangshuai
-Implementation-Vendor-Id: 1
+Implementation-Vendor-Id: smartDietitian
 Class-Path: libs/spring-boot-starter-web-1.2.8.RELEASE.jar libs/spring
  -boot-starter-1.2.8.RELEASE.jar libs/spring-boot-1.2.8.RELEASE.jar li
  bs/spring-boot-autoconfigure-1.2.8.RELEASE.jar libs/spring-boot-start

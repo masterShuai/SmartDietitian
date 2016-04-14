@@ -22,14 +22,7 @@ public class Nutrition {
     @Column
     private String contain_food;//富含该营养元素的食物
 
-    public Nutrition(String id, String name, String unit, String lack_harm, String excess_harm, String contain_food) {
-        this.id = id;
-        this.name = name;
-        this.unit = unit;
-        this.lack_harm = lack_harm;
-        this.excess_harm = excess_harm;
-        this.contain_food = contain_food;
-    }
+
 
     public String getId() {
         return id;
