@@ -19,4 +19,8 @@ public class SimpleUrlController {
         return "hello";
     }
 
+    @RequestMapping(value = "/")
+    public String home() {
+        return "test";
+    }
 }
