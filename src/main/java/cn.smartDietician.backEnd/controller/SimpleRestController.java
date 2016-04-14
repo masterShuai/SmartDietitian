@@ -1,14 +1,20 @@
-package com.znyys.backEnd.controller;
+package cn.smartDietician.backEnd.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;//URL中的变量
+
+import cn.smartDietician.backEnd.service.NutritionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;//支持HTTP方法
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by wangshuai on 2016/4/4.
  */
 @RestController
+@RequestMapping(value="/users")
 public class SimpleRestController {
+    @Autowired
+    private NutritionService webService;
     //匹配多个URL
     @RequestMapping("/")
     public String index() {
@@ -41,4 +47,7 @@ public class SimpleRestController {
     public String loginPost() {
         return "Login Post Request";
     }
+
+
+
 }
