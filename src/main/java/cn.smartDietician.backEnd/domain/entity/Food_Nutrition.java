@@ -1,5 +1,6 @@
 package cn.smartDietician.backEnd.domain.entity;
 
+import cn.smartDietician.backEnd.domain.uionPK.FoodNutritionUionPK;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Column;
@@ -15,27 +16,10 @@ import javax.persistence.Id;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Food_Nutrition {
     @Id
-    private String nutritionid;
-    @Id
-    private long foodid;
+    FoodNutritionUionPK uionPK;
+
     @Column(nullable = false)
     private float content;
-
-    public String getNutritionid() {
-        return nutritionid;
-    }
-
-    public void setNutritionid(String nutritionid) {
-        this.nutritionid = nutritionid;
-    }
-
-    public long getFoodid() {
-        return foodid;
-    }
-
-    public void setFoodid(long foodid) {
-        this.foodid = foodid;
-    }
 
     public float getContent() {
         return content;
@@ -43,5 +27,13 @@ public class Food_Nutrition {
 
     public void setContent(float content) {
         this.content = content;
+    }
+
+    public FoodNutritionUionPK getUionPK() {
+        return uionPK;
+    }
+
+    public void setUionPK(FoodNutritionUionPK uionPK) {
+        this.uionPK = uionPK;
     }
 }

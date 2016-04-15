@@ -1,7 +1,7 @@
 package cn.smartDietician.backEnd.controller;
 
 
-import cn.smartDietician.backEnd.service.NutritionService;
+import cn.smartDietician.backEnd.service.SerachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/test")
 public class SimpleRestController {
     @Autowired
-    private NutritionService webService;
+    private SerachService webService;
 
     //匹配多个URL
     @RequestMapping("/")

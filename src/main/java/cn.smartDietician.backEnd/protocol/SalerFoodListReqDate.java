@@ -1,8 +1,11 @@
 package cn.smartDietician.backEnd.protocol;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by wangshuai on 2016/4/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalerFoodListReqDate {
     private long foodId;
     private String foodName;

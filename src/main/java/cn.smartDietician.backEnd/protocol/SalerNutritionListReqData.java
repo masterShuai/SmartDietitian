@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SalerNutritionListReqData {
+
     private String NutritionId;
     private String NutritionName;
 

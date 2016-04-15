@@ -1,6 +1,7 @@
 package cn.smartDietician.backEnd.protocol;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 /**
  * Created by Administrator on 2015/5/8.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseContent {
     private String result = "";
     private String code = "";

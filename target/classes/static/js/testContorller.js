@@ -4,9 +4,9 @@
     mainApp.controller('PhoneListCtrl', function($scope, $http) {
 
         $scope.urls = {
-            all: "/RES/Nutrition/all"
-            , ById: "/RES/Nutrition/byId"
-            , ByName: "/RES/Nutrition/byName"
+            all: "/Search/Nutrition/all"
+            , ById: "/Search/Nutrition/byId"
+            , ByName: "/Search/Nutrition/byName"
         };
 
         $scope.phones = [
@@ -33,7 +33,7 @@
             "nutritionName": "未找到结果"
         };
 
-        $scope.content = [
+        $scope.nutritionContent = [
             {
                 "nutritionId": 0,
                 "nutritionName": "未找到结果"
@@ -41,6 +41,6 @@
         ]
 
         $http.post($scope.urls.all)
-            .success(function(response) {$scope.content = response.content});
+            .success(function(response) {$scope.nutritionContent = response.content});
     });
 
