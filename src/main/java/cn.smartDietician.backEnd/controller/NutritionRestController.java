@@ -27,7 +27,7 @@ public class NutritionRestController {
      * @param paras 信息参数
      * @return 返回的信息列表
      * */
-    @RequestMapping(value = "/all", method = RequestMethod.POST)
+    @RequestMapping(value = "/all",method = RequestMethod.POST)
     public ResponseContent getPaperAll() {
         //初始化部分信息
         System.out.println("getPaperForValitation-----------");

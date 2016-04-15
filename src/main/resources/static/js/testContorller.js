@@ -4,7 +4,7 @@
     mainApp.controller('PhoneListCtrl', function($scope, $http) {
 
         $scope.urls = {
-            All: "/RES/Nutrition/all"
+            all: "/RES/Nutrition/all"
             , ById: "/RES/Nutrition/byId"
             , ByName: "/RES/Nutrition/byName"
         };
@@ -40,7 +40,7 @@
             }
         ]
 
-        $http.get("http://www.runoob.com/try/angularjs/data/Customers_JSON.php")
-            .success(function(response) {$scope.names = response.records;});
+        $http.post($scope.urls.all)
+            .success(function(response) {$scope.content = response.content});
     });
 
