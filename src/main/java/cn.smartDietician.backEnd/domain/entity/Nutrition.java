@@ -70,7 +70,5 @@ public class Nutrition {
         return contain_food;
     }
 
-    public void setContain_food(String contain_food) {
-        this.contain_food = contain_food;
-    }
+    public void setContain_food(String contain_food) {this.contain_food = contain_food;}
 }

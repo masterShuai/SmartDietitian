@@ -2,7 +2,7 @@ package cn.smartDietician.backEnd.controller;
 
 
 import cn.smartDietician.backEnd.protocol.ResponseContent;
-import cn.smartDietician.backEnd.protocol.SalerNutritionReqData;
+import cn.smartDietician.backEnd.protocol.SalerNutritionListReqData;
 import cn.smartDietician.backEnd.service.NutritionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +42,7 @@ public class NutritionRestController {
      * @return 返回的信息列表
      */
     @RequestMapping(value = "/byId", method = RequestMethod.POST)
-    public ResponseContent getNutritionByID(@RequestBody SalerNutritionReqData paras) {
+    public ResponseContent getNutritionByID(@RequestBody SalerNutritionListReqData paras) {
         //初始化部分信息
         System.out.println("getPaperForValitation-----------");
         return ResponseContent.makeSuccessResponse(NutritionService.getNutritionById(paras.getNutritionId()));
@@ -56,9 +56,11 @@ public class NutritionRestController {
      * @return 返回的信息列表
      */
     @RequestMapping(value = "/byName", method = RequestMethod.POST)
-    public ResponseContent getNutritionByName(@RequestBody SalerNutritionReqData paras) {
+    public ResponseContent getNutritionByName(@RequestBody SalerNutritionListReqData paras) {
         //初始化部分信息
         System.out.println("getPaperForValitation-----------");
         return ResponseContent.makeSuccessResponse(NutritionService.getNutritionByName(paras.getNutritionName()));
     }
+
+
 }
