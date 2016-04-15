@@ -20,10 +20,10 @@ import java.util.Properties;
  * Created by wangshuai on 2016/4/6.
  */
 @Configuration
-@ComponentScan(basePackages={"cn.sit.edu.cs.exam.pol.web"})
+@ComponentScan(basePackages = {"cn.smartDietician.backEnd"})
 @EnableJpaRepositories("cn.smartDietician.backEnd.domain.repository")
 
-  public class ContentConfiguration {
+public class ContentConfiguration {
    /* @Bean
     public HttpMessageConverters customConverters() {
         HttpMessageConverter<?> additional = ...
@@ -32,13 +32,13 @@ import java.util.Properties;
     }*/
 
     @Bean
-    @ConfigurationProperties(prefix="spring.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean
-    @ConfigurationProperties(prefix="spring.jpa")
+    @ConfigurationProperties(prefix = "spring.jpa")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             DataSource dataSource) {
 

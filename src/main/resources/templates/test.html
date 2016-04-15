@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh" ng-app="test">
+<html lang="en" ng-app="test">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="test" />
+    <meta charset="UTF-8"/>
+    <meta name="test"/>
     <title>前端angularJS使用测试</title>
 
-    <script src="lib/angularJS/angular.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
     <script src="js/testContorller.js"></script>
 </head>
 
 <body ng-controller="PhoneListCtrl">
+<div >
+    <ul>
+        <li ng-repeat="phone in phones">
+            {{phone.name}}
+            <p >{{phone.snippet}}</p>
+        </li>
 
-<ul>
-    <li ng-repeat="phone in phones">
-        {{phone.name}}
-        <p>{{phone.snippet}}</p>
+    </ul>
+    <ul>
+        <li ng-repeat="x in names">
+            {{x.name}}
+            <p >{{x.Country}}</p>
+        </li>
+    </ul>
+</div>
 
-    </li>
-</ul>
 </body>
 </html>

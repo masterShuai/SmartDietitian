@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication//与@Configuration @EnableAutoConfiguration @ComponentScan相同
 
 public class Application {
-    public static void main(String[] args) throws Throwable{
+    public static void main(String[] args) throws Throwable {
         //启动Spring Boot项目的唯一入口
         SpringApplication.run(Application.class, args);
     }

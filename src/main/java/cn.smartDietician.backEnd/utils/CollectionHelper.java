@@ -11,7 +11,7 @@ public class CollectionHelper<T> {
 
     public <T> Collection<T> iterableToCollection(Iterable<T> iterable) {
         Collection<T> collection = new ArrayList<T>();
-        while(iterable.iterator().hasNext()){
+        while (iterable.iterator().hasNext()) {
             collection.add(iterable.iterator().next());
         }
         //iterable.forEach(collection::add);

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-  public interface CookBookRepository extends CrudRepository<Nutrition,String> {
+public interface CookBookRepository extends CrudRepository<Nutrition, String> {
 
 }
