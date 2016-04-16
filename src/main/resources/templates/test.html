@@ -18,12 +18,52 @@
         </li>
 
     </ul>
+
+<!--
     <ul>
         <li ng-repeat="x in nutritionContent">
             {{x.nutritionId}}
             <p >{{x.nutritionName}}</p>
         </li>
     </ul>
+-->
+
+
+    <div >
+        <input name="myAddress" ng-model="NutritionReqData.nutritionName" />
+        <button type="button"  ng-click="SearchNutritionByName()">测试模糊查询</button>
+        <div  ng-show="isDivVisible()">
+            <ul>
+                <li ng-repeat="x in nutritionContent">
+                    <button type="button" ng-click="SearchNutritionById(x.nutritionId)"> {{x.nutritionId}}</button>>
+                    <span >{{x.nutritionName}}</span>>
+                </li>
+            </ul>
+        </div>
+
+        <div  ng-show="isDetailDivVisible()">
+            <ul>
+                <li>
+                    <span >编号:{{NutritionDetail.id}}</span>
+                </li>
+                <li>
+                    <span >名称:{{NutritionDetail.name}}</span>
+                </li>
+                <li>
+                    <span >计量单位:{{NutritionDetail.unit}}</span>
+                </li>
+                <li>
+                    <span >缺乏危害:{{NutritionDetail.lack_harm}}</span>
+                </li>
+                <li>
+                    <span >过量危害:{{NutritionDetail.excess_harm}}</span>
+                </li>
+                <li>
+                    <span >富含该元素丰富的食物:{{NutritionDetail.contain_food}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 </body>

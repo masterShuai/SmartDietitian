@@ -1,7 +1,7 @@
 package cn.smartDietician.backEnd.domain.repository;
 
 
-import cn.smartDietician.backEnd.domain.entity.Nutrition;
+import cn.smartDietician.backEnd.domain.entity.Cooking;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface CookingRepository extends CrudRepository<Nutrition, String> {
+public interface CookingRepository extends CrudRepository<Cooking,Long> {
 
 }

@@ -18,6 +18,8 @@ public class Food {
     @Column(nullable = false)
     private String name;//食材名称
     @Column
+    private String city;//产地
+    @Column
     private String other_name;//食材别名
     @Column
     private String kind;//类型
@@ -92,5 +94,14 @@ public class Food {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

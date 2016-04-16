@@ -11,6 +11,8 @@ import java.util.List;
 
     private long id;//食材编号
 
+    private String city;//产地
+
     private String name;//食材名称
 
     private String other_name;//食材别名
@@ -77,6 +79,14 @@ import java.util.List;
 
     public String getUnit() {
         return unit;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setUnit(String unit) {

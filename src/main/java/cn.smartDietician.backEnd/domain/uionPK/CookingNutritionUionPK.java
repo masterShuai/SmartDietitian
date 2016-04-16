@@ -9,11 +9,11 @@ import java.io.Serializable;
  */
 
 @Embeddable
-public class FoodNutritionUionPK implements Serializable {
+public class CookingNutritionUionPK implements Serializable {
     @Column
     private String nutritionId;
     @Column
-    private long foodId;
+    private long cookingId;
 
     public String getNutritionId() {
         return nutritionId;
@@ -23,19 +23,19 @@ public class FoodNutritionUionPK implements Serializable {
         this.nutritionId = nutritionId;
     }
 
-    public long getFoodId() {
-        return foodId;
+    public long getCookingId() {
+        return cookingId;
     }
 
-    public void setFoodId(long foodId) {
-        this.foodId = foodId;
+    public void setCookingId(long cookingId) {
+        this.cookingId = cookingId;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof FoodNutritionUionPK){
-            FoodNutritionUionPK pk=(FoodNutritionUionPK)obj;
-            if(this.nutritionId.equals(pk.nutritionId)&&this.foodId==pk.foodId){
+        if(obj instanceof CookingNutritionUionPK){
+            CookingNutritionUionPK pk=(CookingNutritionUionPK)obj;
+            if(this.nutritionId.equals(pk.nutritionId)&&this.cookingId==pk.cookingId){
                 return true;
             }
         }
