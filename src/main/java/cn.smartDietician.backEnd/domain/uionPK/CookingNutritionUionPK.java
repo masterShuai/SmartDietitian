@@ -15,6 +15,11 @@ public class CookingNutritionUionPK implements Serializable {
     @Column
     private long cookingId;
 
+    public CookingNutritionUionPK(long cookingId, String nutritionId) {
+        this.cookingId = cookingId;
+        this.nutritionId = nutritionId;
+    }
+
     public String getNutritionId() {
         return nutritionId;
     }
@@ -35,7 +40,7 @@ public class CookingNutritionUionPK implements Serializable {
     public boolean equals(Object obj) {
         if(obj instanceof CookingNutritionUionPK){
             CookingNutritionUionPK pk=(CookingNutritionUionPK)obj;
-            if(this.nutritionId.equals(pk.nutritionId)&&this.cookingId==pk.cookingId){
+            if(this.nutritionId.trim().equals(pk.nutritionId.trim())&&this.cookingId==pk.cookingId){
                 return true;
             }
         }

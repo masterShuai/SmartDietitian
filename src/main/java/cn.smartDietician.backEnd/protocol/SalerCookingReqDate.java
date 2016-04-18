@@ -1,5 +1,6 @@
 package cn.smartDietician.backEnd.protocol;
 
+import cn.smartDietician.backEnd.domain.entity.FoodContent;
 import cn.smartDietician.backEnd.domain.entity.NutritionContent;
 
 import java.util.List;
@@ -17,8 +18,10 @@ public class SalerCookingReqDate {
     private String style;//菜系
     private String feature;//简介
     private String howToCook;//详细做法
+    private String authorId;//作者的用户id
 
-    private List<NutritionContent> nutritionContent;//营养含量[{"营养名称":"VC","含量":0,"计量单位":"mg"}]
+    private List<NutritionContent> nutritionContent;//营养含量[{"营养编号":"1","营养名称":"VC","含量":0,"计量单位":"mg"}]
+    private List<FoodContent> foodContent;//食材含量[{"石材编号":1,"食材名称":"稻米","含量":0,"计量单位":"mg"}]
 
     public long getId() {
         return id;
@@ -90,5 +93,21 @@ public class SalerCookingReqDate {
 
     public void setNutritionContent(List<NutritionContent> nutritionContent) {
         this.nutritionContent = nutritionContent;
+    }
+
+    public List<FoodContent> getFoodContent() {
+        return foodContent;
+    }
+
+    public void setFoodContent(List<FoodContent> foodContent) {
+        this.foodContent = foodContent;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 }

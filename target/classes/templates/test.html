@@ -33,12 +33,11 @@
         <input name="myAddress" ng-model="NutritionReqData.nutritionName" />
         <button type="button"  ng-click="SearchNutritionByName()">测试模糊查询</button>
         <div  ng-show="isDivVisible()">
-            <ul>
-                <li ng-repeat="x in nutritionContent">
+
+                <div ng-repeat="x in nutritionContent">
                     <button type="button" ng-click="SearchNutritionById(x.nutritionId)"> {{x.nutritionId}}</button>>
                     <span >{{x.nutritionName}}</span>>
-                </li>
-            </ul>
+                </div>
         </div>
 
         <div  ng-show="isDetailDivVisible()">

@@ -2,6 +2,8 @@ package cn.smartDietician.backEnd.service;
 
 import cn.smartDietician.backEnd.domain.entity.*;
 import cn.smartDietician.backEnd.domain.repository.*;
+import cn.smartDietician.backEnd.domain.uionPK.CookingFoodUionPK;
+import cn.smartDietician.backEnd.domain.uionPK.CookingNutritionUionPK;
 import cn.smartDietician.backEnd.protocol.*;
 import cn.smartDietician.backEnd.utils.CollectionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -24,6 +27,8 @@ import java.util.List;
         "getFoodById",
         "getAllCooking",
         "getCookingById",
+        "computeTodayNtrition",
+        "smartDietician"
 })
 public class SerachService {
 
@@ -37,6 +42,9 @@ public class SerachService {
     private CookingRepository cookingRepository;
     @Autowired
     private CookingNutritionRepository cookingNutritionRepository;
+    @Autowired
+    private CookingFoodRepository cookingFoodRepository;
+
 
     //全部营养元素表信息
     private List<Nutrition> nutritionList = new ArrayList<>();
@@ -44,10 +52,14 @@ public class SerachService {
     private List<Food> foodList = new ArrayList<>();
     //全部食材_营养元素表信息
     private List<Food_Nutrition> foodNutritionList= new ArrayList<>();
+
     //全部菜品表信息
     private List<Cooking> cookingList = new ArrayList<>();
     //全部菜品_营养含量信息
     private CookingNutrition_List cookingNutritionHashTable = new CookingNutrition_List();
+    //全部菜品_食材含表信息
+    private List<Cooking_Food> cookingFoodList= new ArrayList<>();
+
 
     //加入智能配餐基准的营养元素数量
     private int nutritionCount = 24;
@@ -81,6 +93,10 @@ public class SerachService {
         }
         System.out.println("加载到菜品-营养含量信息到HashTable完成");
         cookingNutritionList = null;
+
+        cookingFoodList = helper.iterableToList(cookingFoodRepository.findAll());
+        System.out.println(String.format("加载到菜品-食材含量信息：%d", cookingFoodList.size()));
+
     }
 //------------------------------------------营养---------------------------------------------//
     /**
@@ -223,13 +239,14 @@ public class SerachService {
     }
 
     /**
-     * 通过id 获取指定食材详细信息
+     * 通过id 获取指定菜品详细信息
      * @param cookingId 食材ID
      * @return
      */
     @Cacheable({"getCookingById"})
     public SalerCookingReqDate getCookingById(long cookingId) {
         SalerCookingReqDate sc = new SalerCookingReqDate();
+        sc.setId(0);
         Cooking c;
         for (int i=0;i<cookingList.size();i++){
             c = cookingList.get(i);
@@ -242,8 +259,10 @@ public class SerachService {
                 sc.setStyle(c.getStyle());
                 sc.setFeature(c.getFeature());
                 sc.setHowToCook(c.getHowToCook());
+                sc.setAuthorId(c.getAuthorId());
 
                 sc.setNutritionContent(getContentByCookingId(cookingId));
+                sc.setFoodContent(getFoodByCookingId(cookingId));
                 break;
             }
         }
@@ -251,7 +270,7 @@ public class SerachService {
     }
 
     /**
-     * 通过名称模糊查询食材名称列表
+     * 通过名称模糊查询菜品名称列表
      * @param cookingName 模糊匹配字符串
      * @return
      */
@@ -269,15 +288,199 @@ public class SerachService {
         return salerCookingList;
     }
 
+    /**
+     * 添加菜品
+     * @param cookingReqDate 前端请求数据
+     * @return
+     */
+    public boolean saveCooking(SalerCookingReqDate cookingReqDate,String userId){
+        int state = 0;
+        Cooking cooking = new Cooking();
+        Hashtable<String,Float> cookingNutritions = new Hashtable<>();
+        try{
+            //将菜品信息存入菜品表
+            cooking.setId(cookingReqDate.getId());
+            cooking.setName(cookingReqDate.getName());
+            cooking.setOtherName(cookingReqDate.getOtherName());
+            cooking.setTaste(cookingReqDate.getTaste());
+            cooking.setKind(cookingReqDate.getKind());
+            cooking.setStyle(cookingReqDate.getStyle());
+            cooking.setFeature(cookingReqDate.getFeature());
+            cooking.setHowToCook(cookingReqDate.getHowToCook());
+            cooking.setAuthorId(userId);
+            cookingRepository.save(cooking);
+            state = 1;
+            //加入内存
+            cookingList.add(cooking);
+            state = 2;
+
+            //将菜品食材用量存入菜品-食材表,并统计菜品营养含量
+            List<Cooking_Food> cookingFoods = new ArrayList<>();
+            //遍历前端请求数据中,菜品选用食材List
+            List<FoodContent> foodContents = cookingReqDate.getFoodContent();
+            Cooking_Food cf=new Cooking_Food();
+            for (int i=0;i<foodContents.size();i++){
+                cf.setUionPK(new CookingFoodUionPK(foodContents.get(i).foodId,cooking.getId()));
+                cf.setContent(foodContents.get(i).content);
+                cookingFoods.add(cf);
+                //加入内存
+                cookingFoodList.add(cf);
+                List<NutritionContent> nutritionContents = getContentByFoodId(foodContents.get(i).foodId);
+                for(int j=0;j<nutritionContents.size();j++){
+                    if(cookingNutritions.get(nutritionContents.get(j).nutritionId) != null) {
+                        cookingNutritions.put(nutritionContents.get(j).nutritionId
+                                , nutritionContents.get(j).content + cookingNutritions.get(j));
+                    }else{
+                        cookingNutritions.put(nutritionContents.get(j).nutritionId
+                                , nutritionContents.get(j).content);
+                    }
+                }
+            }
+            //将菜品食材用量存入菜品-食材表
+            cookingFoodRepository.save(cookingFoods);
+            state = 3;
+
+            //菜品-营养含量存入数据库
+            List<Cooking_Nutrition> cooking_Nutritions = new ArrayList<>();
+            Cooking_Nutrition cn = new Cooking_Nutrition();
+            for(Integer k = 1;k<nutritionCount;k++){
+                if(cookingNutritions.get(k.toString())!=null){
+                    cn.setUionPK(new CookingNutritionUionPK(cooking.getId(),k.toString()));
+                    cn.setContent(cookingNutritions.get(k.toString()));
+                    cooking_Nutritions.add(cn);
+                    cookingNutritionHashTable.addNewItem(k.toString(),cooking.getId(),cn.getContent());
+                }
+            }
+            state = 4;
+            cookingNutritionRepository.save(cooking_Nutritions);
+
+        }catch (Exception E){
+            System.out.println("save cooking error state:"+state);
+            if (state>=1){
+                //恢复菜品数据库 到添加菜品请求之前
+                cookingRepository.delete(cooking);
+            }
+            if (state>=2){
+                //恢复菜品list 到添加菜品请求之前
+                cookingList.remove(cooking);
+            }
+            if (state>=3){
+                List<Cooking_Food> cookingFoods = new ArrayList<>();
+
+                //恢复菜品选用食材List到添加菜品请求之前
+                List<FoodContent> foodContents = cookingReqDate.getFoodContent();
+                Cooking_Food cf=new Cooking_Food();
+                for (int i=0;i<foodContents.size();i++){
+                    cf.setUionPK(new CookingFoodUionPK(foodContents.get(i).foodId,cooking.getId()));
+                    cf.setContent(foodContents.get(i).content);
+                    cookingFoods.add(cf);
+                    //移出内存
+                    cookingFoodList.remove(cf);
+                    List<NutritionContent> nutritionContents = getContentByFoodId(foodContents.get(i).foodId);
+                    for(int j=0;j<nutritionContents.size();j++){
+                        if(cookingNutritions.get(nutritionContents.get(j).nutritionId) != null) {
+                            cookingNutritions.put(nutritionContents.get(j).nutritionId
+                                    , nutritionContents.get(j).content + cookingNutritions.get(j));
+                        }else{
+                            cookingNutritions.put(nutritionContents.get(j).nutritionId
+                                    , nutritionContents.get(j).content);
+                        }
+                    }
+                }
+                //恢复菜品-食材表
+                cookingFoodRepository.delete(cookingFoods);
+            }
+            if (state>=4){
+                List<Cooking_Nutrition> cooking_Nutritions = new ArrayList<>();
+                Cooking_Nutrition cn = new Cooking_Nutrition();
+                for(Integer k = 1;k<nutritionCount;k++){
+                    if(cookingNutritions.get(k.toString())!=null){
+                        cn.setUionPK(new CookingNutritionUionPK(cooking.getId(),k.toString()));
+                        cn.setContent(cookingNutritions.get(k.toString()));
+                        cooking_Nutritions.add(cn);
+                        cookingNutritionHashTable.removeItem(k.toString(), cooking.getId());
+                    }
+                }
+                cookingNutritionRepository.delete(cooking_Nutritions);
+            }
+            return  false;
+        }
+        return true;
+    }
+
+    /**
+     * 计算多种菜品营养总含量
+     * @param salerUserCookingReqDate
+     * @return
+     */
+    @Cacheable({"computeTodayNtrition"})
+    public List<NutritionContent> getTodayNutrition(SalerUserCookingReqDate salerUserCookingReqDate){
+        List<NutritionContent> ncl = new ArrayList<>();
+        NutritionContent nc;
+        Nutrition n;
+        float content;
+
+        for (Integer i=1;i<=nutritionCount;i++){
+            n = getNutritionById(i.toString());
+            nc = new NutritionContent(n.getId(), n.getName(), 0, n.getUnit());
+            for(int j=0;j<salerUserCookingReqDate.cookingContent.size();j++){
+                content=cookingNutritionHashTable.getContent(i.toString(),
+                        salerUserCookingReqDate.cookingContent.get(j).cookingId);
+                if (content!=-1){
+                    nc.content+=content
+                            *salerUserCookingReqDate.cookingContent.get(j).content
+                            /salerUserCookingReqDate.cookingContent.get(j).numb;
+                }
+            }
+            ncl.add(nc);
+        }
+        return ncl;
+    }
+
+    @Cacheable({"smartDietician"})
+    public SalerCookingReqDate smartDietician(List<NutritionContent> nutritionContentList){
+        int maxLevel = nutritionContentList.size();
+        int result = 0; //智能匹配出的菜品编号
+        Hashtable<Integer,Float> cookingLevel = new Hashtable<>();//记录菜品等级
+        //菜品评级
+        for(int i=0;i<cookingList.size();i++){
+            long nowCookingId = cookingList.get(i).getId();
+            float needingContent = nutritionContentList.get(i).content;
+            float level = 0;
+            for(Integer j=0;j<maxLevel;j++){
+                float content = cookingNutritionHashTable.getContent(j.toString(),nowCookingId);
+                if(content!=-1){
+                    if(content>=needingContent){
+                        level+=1;
+                    }else if(content<needingContent&&content>0){
+                        level+=(content/needingContent);
+                    }
+                }
+            }
+            if(level==maxLevel){
+                result = i;
+                break;
+            }
+            else{
+                cookingLevel.put(i,level);
+            }
+        }
+
+        int secondaryResult = 0;
+        for(int k=0;k<cookingList.size();k++){
+            if(cookingLevel.get(k)>secondaryResult)
+                secondaryResult = k;
+        }
 
 
 
-
+        return getCookingById(result);
+    }
 
 //######################### 内部调用函数 ############################################
 
     /**
-     * 内部调用,获取某种菜品的营养含量
+     * 内部调用,获取某种食材的营养含量
      * @param id
      * @return
      */
@@ -285,7 +488,6 @@ public class SerachService {
         List<NutritionContent> ncl = new ArrayList<>();
         NutritionContent nc;
         Food_Nutrition fn = new Food_Nutrition();
-
 
         for(int i = 0;i< foodNutritionList.size();i++){
             fn = foodNutritionList.get(i);
@@ -323,5 +525,27 @@ public class SerachService {
             }
         }
         return ncl;
+    }
+
+    /**
+     * 内部调用,获取某种菜品的食材用量
+     * @param id
+     * @return
+     */
+    public List<FoodContent> getFoodByCookingId(long id){
+        List<FoodContent> fcl = new ArrayList<>();
+        FoodContent fc;
+        Cooking_Food cf = new Cooking_Food();
+
+        for(int i = 0;i< cookingFoodList.size();i++){
+            cf = cookingFoodList.get(i);
+            if (cf.getUionPK().getCookingId()==id){
+                fc = new FoodContent(cf.getUionPK().getFoodId(),
+                        getFoodById(id).getName(),
+                        cf.getContent());
+                fcl.add(fc);
+            }
+        }
+        return fcl;
     }
 }

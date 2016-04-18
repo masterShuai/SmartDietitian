@@ -1,14 +1,14 @@
 package cn.smartDietician.backEnd.controller;
 
 
-import cn.smartDietician.backEnd.protocol.ResponseContent;
-import cn.smartDietician.backEnd.protocol.SalerFoodListReqDate;
-import cn.smartDietician.backEnd.protocol.SalerFoodReqDate;
-import cn.smartDietician.backEnd.protocol.SalerNutritionListReqData;
+import cn.smartDietician.backEnd.domain.entity.NutritionContent;
+import cn.smartDietician.backEnd.protocol.*;
 import cn.smartDietician.backEnd.service.SerachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,9 +98,9 @@ public class SearchRestController {
      * @return 返回的信息列表
      */
     @RequestMapping(value = "/Food/byId", method = RequestMethod.POST)
-    public ResponseContent getNutritionByID(@RequestBody SalerFoodListReqDate paras) {
+    public ResponseContent getFoodByID(@RequestBody SalerFoodListReqDate paras) {
         //初始化部分信息
-        System.out.println("getNutritionByIdValitation-----------");
+        System.out.println("getFoodNutritionByIdValitation-----------");
         return ResponseContent.makeSuccessResponse(SerachService.getFoodById(paras.getFoodId()));
     }
 
@@ -112,7 +112,7 @@ public class SearchRestController {
      * @return 返回的信息列表
      */
     @RequestMapping(value = "/Food/byName", method = RequestMethod.POST)
-    public ResponseContent getNutritionByName(@RequestBody SalerFoodListReqDate paras) {
+    public ResponseContent getFoodByName(@RequestBody SalerFoodListReqDate paras) {
         //初始化部分信息
         System.out.println("getFoodByNameForValitation-----------");
         return ResponseContent.makeSuccessResponse(SerachService.getFoodByName(paras.getFoodName()));
@@ -126,15 +126,114 @@ public class SearchRestController {
      * @return 返回的信息列表
      */
     @RequestMapping(value = "/Food/testAll", method = RequestMethod.GET)
-    public ResponseContent getNutrition(@RequestParam(value = "start", required=true) int start,
+    public ResponseContent getFoodTest(@RequestParam(value = "start", required=true) int start,
                                         @RequestParam(value = "end", required=true) int end)
     {
         //初始化部分信息
-        System.out.println("getNutritionByIdValitation-----------");
-        List<SalerFoodReqDate> foodReqDateList = new ArrayList<>();
-        for (int i = start;i<end;i++){
+        System.out.println("getFoodNutritionByIdValitation-----------");
+        List<SalerFoodReqDate> foodReqDateList = new ArrayList<SalerFoodReqDate>();
+        for (int i = start;i<=end;i++){
             foodReqDateList.add(SerachService.getFoodById(i));
         }
         return ResponseContent.makeSuccessResponse(foodReqDateList);
+    }
+//########################################## 菜品 查询;DIY##############################################//
+
+    /*
+     * 获取所有菜品名称列表
+     * /all  POST
+     *
+     * @param paras 信息参数
+     * @return 返回的信息列表
+     * */
+    @RequestMapping(value = "/Cooking/all",method = RequestMethod.POST)
+    public ResponseContent getCookingAll() {
+        //初始化部分信息
+        System.out.println("getCookingAllForValitation-----------");
+        return ResponseContent.makeSuccessResponse(SerachService.getAllCooking());
+    }
+
+    /**
+     * 获取指定ID菜品
+     * /byId  POST
+     *
+     * @param paras 信息参数
+     * @return 返回的信息列表
+     */
+    @RequestMapping(value = "/Cooking/byId", method = RequestMethod.POST)
+    public ResponseContent getCookingByID(@RequestBody SalerCookingListReqDate paras) {
+        //初始化部分信息
+        System.out.println("getCookingNutritionByIdValitation-----------");
+        return ResponseContent.makeSuccessResponse(SerachService.getCookingById(paras.getCookingId()));
+    }
+
+    /**
+     * 通过关键字模糊查找
+     * /byName  POST
+     *
+     * @param paras 信息参数
+     * @return 返回的信息列表
+     */
+    @RequestMapping(value = "/Cooking/byName", method = RequestMethod.POST)
+    public ResponseContent getCookingByName(@RequestBody SalerCookingListReqDate paras) {
+        //初始化部分信息
+        System.out.println("getCookingByNameForValitation-----------");
+        return ResponseContent.makeSuccessResponse(SerachService.getCookingByName(paras.getCookingName()));
+    }
+
+    /**
+     *
+     * @param paras 新增菜品信息
+     * @return response.content(true||false) 说明添加是否成功
+     */
+    @RequestMapping(value = "/Cooking/save", method = RequestMethod.POST)
+    public ResponseContent saveCooking(@RequestBody SalerCookingReqDate paras,
+                                       HttpServletRequest request,
+                                       HttpSession session) {
+        //初始化部分信息
+        System.out.println("getSaveCookingValitation-----------");
+        String userId;
+        if(session.getAttribute("User")!=null){
+            userId = session.getAttribute("User").toString();
+            return ResponseContent.makeSuccessResponse(SerachService.saveCooking(paras,userId));
+        }
+        else
+            return ResponseContent.makeFailResponse();
+    }
+
+    /**
+     * 测试菜品
+     * /byId  POST
+     *
+     * @param end 结束索引
+     * @param start 开始索引
+     * @return 返回的信息列表
+     */
+    @RequestMapping(value = "/Cooking/testAll", method = RequestMethod.GET)
+    public ResponseContent getCooking(@RequestParam(value = "start", required=true) int start,
+                                        @RequestParam(value = "end", required=true) int end) {
+        //初始化部分信息
+        System.out.println("getCookingNutritionByIdValitation-----------");
+        List<SalerCookingReqDate> cookingReqDateList = new ArrayList<SalerCookingReqDate>();
+        for (int i = start;i<=end;i++){
+            cookingReqDateList.add(SerachService.getCookingById(i));
+        }
+        return ResponseContent.makeSuccessResponse(cookingReqDateList);
+    }
+
+    /**
+     *
+     */
+
+    @RequestMapping(value = "/Cooking/smartDietician", method = RequestMethod.POST)
+    public ResponseContent smartDietician(@RequestBody List<NutritionContent> paras) {
+        //初始化部分信息
+        System.out.println("getCookingNutritionByIdValitation-----------");
+        SalerCookingReqDate salerCookingReqDate = SerachService.smartDietician(paras);
+        if (salerCookingReqDate.getId()!=0){
+            return ResponseContent.makeSuccessResponse();
+        }
+        else
+            return ResponseContent.makeFailResponse();
     }
 }

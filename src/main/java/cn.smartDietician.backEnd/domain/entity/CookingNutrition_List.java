@@ -31,7 +31,7 @@ public class CookingNutrition_List {
     public Hashtable<Long, Float> VA; //维生素A(μg) 18
     public Hashtable<Long, Float> VB1; //维生素B1,硫胺素(mg) 19
     public Hashtable<Long, Float> VB2; //维生素B2,核黄素(mg) 20
-    public Hashtable<Long, Float> VB3; //维生素B3尼克酸(mg) 21
+    public Hashtable<Long, Float> VB3; //维生素B3尼克酸,烟酸(mg) 21
     public Hashtable<Long, Float> VC; //维生素C抗坏血酸(mg) 22
     public Hashtable<Long, Float> VE; //维生素E,核黄素(mg) 23
     public Hashtable<Long, Float> cholesterol; //胆固醇(mg) 24
@@ -155,6 +155,65 @@ public class CookingNutrition_List {
             }
         }catch (Exception e){
             result = -1;
+        }
+        return result;
+    }
+
+    public boolean removeItem(String nutritionId,Long cookingId){
+        boolean result = true;
+        try{
+            switch (nutritionId){
+                case "1":water.remove(cookingId);
+                    break;
+                case "2":protein.remove(cookingId);
+                    break;
+                case "3":fat.remove(cookingId);
+                    break;
+                case "4":carbohydrate.remove(cookingId);
+                    break;
+                case "5":energy.remove(cookingId);
+                    break;
+                case "6":DF.remove(cookingId);
+                    break;
+                case "7":K.remove(cookingId);
+                    break;
+                case "8":Na.remove(cookingId);
+                    break;
+                case "9":Mg.remove(cookingId);
+                    break;
+                case "10":Ga.remove(cookingId);
+                    break;
+                case "11":P.remove(cookingId);
+                    break;
+                case "12":Fe.remove(cookingId);
+                    break;
+                case "13":Zn.remove(cookingId);
+                    break;
+                case "14":Cu.remove(cookingId);
+                    break;
+                case "15":Mn.remove(cookingId);
+                    break;
+                case "16":Se.remove(cookingId);
+                    break;
+                case "17":Co.remove(cookingId);
+                    break;
+                case "18":VA.remove(cookingId);
+                    break;
+                case "19":VB1.remove(cookingId);
+                    break;
+                case "20":VB2.remove(cookingId);
+                    break;
+                case "21":VB3.remove(cookingId);
+                    break;
+                case "22":VC.remove(cookingId);
+                    break;
+                case "23":VE.remove(cookingId);
+                    break;
+                case "24":cholesterol.remove(cookingId);
+                    break;
+            }
+        }catch (Exception e){
+            result = false;
         }
         return result;
     }

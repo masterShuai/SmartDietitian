@@ -71,5 +71,4 @@ public class ContentConfiguration {
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager();
     }
-
 }

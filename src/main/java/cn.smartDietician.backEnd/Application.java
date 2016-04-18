@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration//配置控制
 @ComponentScan//组件扫描
 @EnableCaching
-@SpringBootApplication//与@Configuration @EnableAutoConfiguration @ComponentScan相同
+@SpringBootApplication//与@Configuration @EnableAutoConfiguration @ComponentScan相同]
 
 public class Application {
     public static void main(String[] args) throws Throwable {

@@ -35,6 +35,7 @@ public class SimpleRestController {
     }
 
     @RequestMapping("/posts/{id}")
+
     public String post(@PathVariable("id") int id) {
         return String.format("post %d", id);
     }

@@ -35,7 +35,7 @@ public class FoodNutritionUionPK implements Serializable {
     public boolean equals(Object obj) {
         if(obj instanceof FoodNutritionUionPK){
             FoodNutritionUionPK pk=(FoodNutritionUionPK)obj;
-            if(this.nutritionId.equals(pk.nutritionId)&&this.foodId==pk.foodId){
+            if(this.nutritionId.trim().equals(pk.nutritionId.trim())&&this.foodId==pk.foodId){
                 return true;
             }
         }
