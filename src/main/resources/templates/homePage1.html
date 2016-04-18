@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/css/homePage1.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<script>
+function goBottom() {
+window.scrollTo(0, document.documentElement.scrollHeight-document.documentElement.clientHeight); 
+}
+function openwin(){
+window.open("signIn.html",'newwindow','height=500,width=400,top=200;left=0,toolbar=no,menubar=no, scrollbars=no,resizable=no,location=no, status=no')
+}
+
+</script>
+
+		<div id="s">
+        	<div class="container" >
+                <div id="header">
+					<img src="/images/UI/logo.png" style="position:absolute;left:198px;top:27px;" />
+                </div>
+                    
+                <div id="menu">
+						<nav id="fh5co-menu-wrap" >
+						<ul class="sf-menu" id="fh5co-primary-menu" style="top:32px;font-size:18px;">
+                             <li><input type="button" value="主页"style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;"></li>
+                             <li><input type="button" value="功能" onclick="goBottom()" style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;"></li>
+                             <li><input type="button" value="帮助" style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;"></li>
+                             <li><input type="button" value="登录"onclick="openwin()" style="border:0;font-size:16px;background-color:#F93;color:#FFF;width:70px;height:32PX;"></li>
+						</ul>
+					</nav>
+			  	</div>
+         	</div>
+            <div class="article" >
+            	
+                    <div align="center">
+                    <fieldset class="select">
+                    <input type="button" value="菜品" id="菜品" style="border:0;background-color:transparent;color:#FFF;"/>
+                    <input type="button" value="食材" style="border:0;background-color:transparent;color:#FFF;"/>
+                    <input type="button" value="营养元素" style="border:0;background-color:transparent;color:#FFF;"/>
+                    </fieldset>
+                    </div>
+                    <div>
+                    <fieldset class="search" style="position:absolute;margin-left:402px;">
+                         <input type="text" class="box"  id="sx" class="inputText" placeholder="搜索菜品、食材、营养元素"/>
+                         <button class="btn" title="SEARCH"> </button>
+                    </fieldset>
+                    </div>
+                    <div style="margin-top:200px;margin-left:650px;">
+                    <input name="圆形按钮" type="button" onclick="goBottom()" style="border:#FFF;border-radius:40px;background-image:url(/images/UI/orangeButton.png);width:80px;height:80px;"/>
+                    </div>
+             	
+        	</div>   
+		</div>
+        <div id="x">
+            <div id="1" style="float:left;margin-top:34px;margin-left:33px;">
+              <a href="DiyCooking.html"><input name="DIY" type="button" style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/DIY.png);" /></a><br/>
+              <a href="DiyCooking.html"><input name="DIY1" type="button" value="DIY" style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px; box-shadow: 0 10px 10px 
+              #CCC;box-shadow: 0 10px 10px #CCCCCC;" /></a>
+            </div>
+            <div id="2" style="float:left;margin-top:34px;margin-left:33px;">
+             <input name="智能配餐" type="button" style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/smartDietitian.png);"/><br/>
+             <input name="智能配餐1" type="button" value="智能配餐 " style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px 
+              #CCC;box-shadow: 0 10px 10px #CCCCCC;"/>
+            </div>
+            <div id="3" style="float:left;margin-top:34px;margin-left:33px;">
+            <input name="个人中心" type="button" style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/UserCenter.png);"/><br/>
+            <input name="个人中心1" type="button" value="个人中心"style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px 
+            #CCC;box-shadow: 0 10px 10px #CCCCCC;"/>
+            </div>
+        </div>
+
+</div>
+</body>
+</html>

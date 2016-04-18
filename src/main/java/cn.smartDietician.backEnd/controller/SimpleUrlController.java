@@ -19,7 +19,7 @@ public class SimpleUrlController {
         return "hello";
     }
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/marster/test")
     public String home() {
         return "test";
     }
