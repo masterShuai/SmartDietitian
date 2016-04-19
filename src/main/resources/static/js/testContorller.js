@@ -1,13 +1,6 @@
+var mainApp = angular.module("test", []);
 
-    //删除所有空格函数
-    String.prototype.trim=function() {
-
-        return this.replace(/(^\s*)|(\s*$)/g,'');
-    }
-
-    var mainApp = angular.module("test", []);
-
-    mainApp.controller('PhoneListCtrl', function($scope, $http) {
+ mainApp.controller('PhoneListCtrl', function($scope, $http) {
 
         $scope.urls = {
             all: "/Search/Nutrition/all"
@@ -66,7 +59,7 @@
         $scope.SearchNutritionByName = function(){
 
             $scope.SearchResult =false;
-            $scope.NutritionReqData.nutritionName =  $scope.NutritionReqData.nutritionName.trim();
+            $scope.NutritionReqData.nutritionName =  $scope.NutritionReqData.nutritionName;
             $http.post($scope.urls.ByName,$scope.NutritionReqData)
                 .success(function(response) {
                     $scope.nutritionContent = response.content;
@@ -96,5 +89,6 @@
         $scope.isDetailDivVisible = function(){
             return $scope.SearchDetailResult;
         }
-    });
+
+});
 
