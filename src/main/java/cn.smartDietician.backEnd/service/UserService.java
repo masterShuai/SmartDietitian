@@ -18,6 +18,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -66,13 +67,13 @@ public class UserService {
         System.out.println(String.format("加载到用户-密码数量：%d", UserIdPassword.size()));
         //读取全部用户营养推荐摄入量
         userNutritionMinList = helper.iterableToList(userNutritionMinRepository.findAll());
-        System.out.println(String.format("加载到用户摄入下限数量：%d", userList.size()));
+        System.out.println(String.format("加载到用户摄入下限数量：%d", userNutritionMinList.size()));
         //读取全部用户营养摄入量上限
         userNutritionMaxList = helper.iterableToList(userNutritionMaxRepository.findAll());
-        System.out.println(String.format("加载到用户摄入上限数量：%d", userList.size()));
+        System.out.println(String.format("加载到用户摄入上限数量：%d", userNutritionMaxList.size()));
         //读取全部用户原创菜品表
         userCookingList = helper.iterableToList(userCookingRepository.findAll());
-        System.out.println(String.format("加载到用户原创菜品数量：%d", userList.size()));
+        System.out.println(String.format("加载到用户原创菜品数量：%d", userCookingList.size()));
     }
 
     /**
@@ -83,10 +84,22 @@ public class UserService {
      */
     @Cacheable({"doLogin"})
     public boolean doLogin(SalerIdPassword ip) {
-        if (UserIdPassword.get(ip.getID().trim()).equals(ip.getPassWord().trim()))
-            return true;
-        else
+        try{
+            System.out.println("收到的ID"+ip.getID());
+            System.out.println("收到的PW"+ip.getPassWord());
+
+            String pw = UserIdPassword.get(ip.getID());
+            System.out.println("列表中的pw"+pw);
+
+            if (pw.equals(ip.getPassWord()))
+                return true;
+            else
+                return false;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
             return false;
+        }
+
     }
 
     /**
@@ -178,6 +191,7 @@ public class UserService {
      */
     public boolean addUser(SalerUserReqDate user) {
         if (isExist(user.getId())) {
+            System.out.println("用户名已存在");
             return false;
         }
         int state = 0;
@@ -189,7 +203,9 @@ public class UserService {
             newUser.setId(user.getId());
             newUser.setName(user.getName());
             newUser.setPassword(user.getPassword());
-            newUser.setBirthday(user.getBirthday());
+            System.out.println("用户信息复制");
+            newUser.setBirthday((new SimpleDateFormat("yyyy-MM-dd")).parse(user.getBirthday()));
+            System.out.println("转换生日成功");
             newUser.setWeight(user.getWeight());
             newUser.setSex(user.getSex());
             newUser.setPregnant(user.isPregnant());//是否怀孕
@@ -198,20 +214,33 @@ public class UserService {
             newUser.setManualWork(user.getManualWork());//体力劳动程度
             //save
             userRepository.save(newUser);
+            System.out.println("用户写入成功");
+
             userList.add(newUser);
+            System.out.println("用户存入内存");
             state = 1;
             unml = getMinNutrition(newUser);
-            userNutritionMinRepository.save(unml);
+            System.out.println("获取推荐营养摄入量");
+            for (int i=0;i<unml.size();i++){
+                System.out.println(unml.get(i).getContent());
+                System.out.println(unml.get(i).getUionPK().getNutritionId());
+                System.out.println(unml.get(i).getUionPK().getUserId());
+                userNutritionMinRepository.save(unml.get(i));
+                System.out.println("==================写入推荐摄入 第"+i+"个==========================");
+            }
+
             userNutritionMinList.addAll(unml);
             state = 2;
 
-            unMaxl = getMaxNutrition(newUser);
+          /*  unMaxl = getMaxNutrition(newUser);
             userNutritionMaxRepository.save(unMaxl);
             userNutritionMaxList.addAll(unMaxl);
-            state = 3;
+            state = 3;*/
 
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.toString());
             try {
                 if (state >= 1){
                     userRepository.delete(newUser);
@@ -221,12 +250,16 @@ public class UserService {
                     userNutritionMinRepository.delete(unml);
                     userNutritionMinList.removeAll(unml);
                 }
-                if(state>=3){
+               /* if(state>=3){
                     userNutritionMaxRepository.delete(unMaxl);
                     userNutritionMaxList.removeAll(unMaxl);
-                }
+                }*/
                 return false;
             } catch (Exception e2) {
+                System.out.println("```````");
+                System.out.println(e.toString());
+                System.out.println(e.getMessage());
+                System.out.println(e.toString());
                 return false;
             }
         }

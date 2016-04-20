@@ -20,6 +20,8 @@ public class UserCookingUionPK implements Serializable {
         this.cookingId = cookingId;
     }
 
+    public UserCookingUionPK(){}
+
     public String getUserId() {
         return userId;
     }

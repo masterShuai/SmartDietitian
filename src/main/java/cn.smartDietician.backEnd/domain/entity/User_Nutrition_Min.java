@@ -41,4 +41,8 @@ public class User_Nutrition_Min {
         this.uionPK = uionPK;
         this.content = content;
     }
+
+    public User_Nutrition_Min(){
+
+    }
 }

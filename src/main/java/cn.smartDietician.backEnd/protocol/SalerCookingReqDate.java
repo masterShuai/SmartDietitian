@@ -2,12 +2,14 @@ package cn.smartDietician.backEnd.protocol;
 
 import cn.smartDietician.backEnd.domain.entity.FoodContent;
 import cn.smartDietician.backEnd.domain.entity.NutritionContent;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 /**
  * Created by wangshuai on 2016/4/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalerCookingReqDate {
 
     private long id;//菜品编号

@@ -1,8 +1,11 @@
 package cn.smartDietician.backEnd.protocol;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by wangshuai on 2016/4/17.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalerIdPassword {
     private String ID;
     private String PassWord;
