@@ -1,0 +1,96 @@
+
+div#left{width:50%;float:left;}
+div#right{
+	width: 50%;
+	position: absolute;
+	float: right;
+	top: 6px;
+	height: 1401px;
+	left: 600px;
+}
+div#leftheader{margin-left:20px;width:525px;}
+div#leftfooter{height:600px;}
+div#leftfooter1{width:326px;float:left;}
+div#leftfooter2{width:170px;float:right;}
+div#right1{float:left;}
+
+body {
+	    margin:0;
+        font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        font-size:16px;
+		color:#666;		
+		overflow:scroll;
+	  }
+#title{
+	
+	font-size:24px;
+	color:#FC0;
+	margin-top:73px;
+	margin-left:300px;
+	}
+#cookingname{
+    
+	margin-top:119px;
+	width:400px;
+	height:20px;
+	outline:none;
+	}
+#nickname{
+	border:0;
+	width:400px;
+	height:20px;
+	outline:none;
+	}
+#flavor{
+	border:0;
+	width:400px;
+	height:20px;
+	outline:none;
+	}
+#category{
+	border:0;
+	width:400px;
+	height:20px;
+	outline:none;
+	}
+#cuisine{
+	border:0;
+	width:400px;
+	height:20px;
+	outline:none;
+	}
+#introduction{
+	border:0;
+	width:400px;
+	height:20px;
+	margin-left:8px;
+	outline:none;
+	}
+#detailedapproach{
+	margin-left:8px;
+
+}
+#image{
+    margin-top:42px;
+	margin-left:20px;
+	}
+#browse1{
+	width:136px;
+	height:63px;
+	background-color:#FC0;
+	border:0;
+	font-size:20px;
+	color:#a0a0a0;
+	margin-top:42px;
+	margin-left:34px;
+	}
+#upload1 {
+	width: 136px;
+	height: 63px;
+	background-color: #ffd84f;
+	border: 0;
+	font-size: 20px;
+	color: #FFF;
+	margin-top: 28px;
+	margin-left: 34px;
+}

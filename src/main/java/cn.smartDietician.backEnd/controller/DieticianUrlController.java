@@ -12,4 +12,21 @@ public class DieticianUrlController {
     public String searchHome() {
         return "homePage1";
     }
+
+    @RequestMapping("/food")
+    public String foodDetail() {
+        return "fooddetail";
+    }
+
+    @RequestMapping("/DiyCooking")
+    public String diyCooking() { return "DiyCooking";}
+
+    @RequestMapping("/personalcenter")
+    public String personalcenter() { return "personalcenter"; }
+
+    @RequestMapping("/register")
+    public String register(){ return "register";}
+
+    @RequestMapping("/signIn")
+    public String signin(){ return "signIn";}
 }

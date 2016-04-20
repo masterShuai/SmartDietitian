@@ -1,9 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+
+
+
+  	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=yes"/>
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link href="/css/homePage1.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 <script>
@@ -13,10 +28,8 @@ window.scrollTo(0, document.documentElement.scrollHeight-document.documentElemen
 function openwin(){
 window.open("signIn.html","newwindow","height=500,width=400,top=200;left=0,toolbar=no,menubar=no, scrollbars=no,resizable=no,location=no, status=no")
 }
-
 </script>
-
-		<div id="s">
+		<div id="sx">
         	<div class="container" >
                 <div id="header">
 					<img src="/images/UI/logo.png" style="position:absolute;left:198px;top:27px;" />
@@ -44,8 +57,8 @@ window.open("signIn.html","newwindow","height=500,width=400,top=200;left=0,toolb
                     </div>
                     <div>
                     <fieldset class="search" style="position:absolute;margin-left:402px;">
-                         <input type="text" class="box"  id="sx" class="inputText" placeholder="搜索菜品、食材、营养元素"/>
-                         <button class="btn" title="SEARCH"> </button>
+                         <input type="text" class="box" name="s" id="s" class="inputText" placeholder="搜索菜品、食材、营养元素"x-webkit-speech/>
+                         <button class="btn" id="btn"title="SEARCH"> </button>
                     </fieldset>
                     </div>
                     <div style="margin-top:200px;margin-left:650px;">
@@ -57,7 +70,7 @@ window.open("signIn.html","newwindow","height=500,width=400,top=200;left=0,toolb
         <div id="x">
             <div id="1" style="float:left;margin-top:34px;margin-left:33px;">
               <a href="DiyCooking.html"><input name="DIY" type="button" style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/DIY.png);" /></a><br/>
-              <a href="DiyCooking.html"><input name="DIY1" type="button" value="DIY" style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px; box-shadow: 0 10px 10px 
+              <a href="DiyCooking.html"><input name="DIY1" type="button" value="DIY" style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px; box-shadow: 0 10px 10px
               #CCC;box-shadow: 0 10px 10px #CCCCCC;" /></a>
             </div>
             <div id="2" style="float:left;margin-top:34px;margin-left:33px;">
@@ -66,12 +79,10 @@ window.open("signIn.html","newwindow","height=500,width=400,top=200;left=0,toolb
               #CCC;box-shadow: 0 10px 10px #CCCCCC;"/>
             </div>
             <div id="3" style="float:left;margin-top:34px;margin-left:33px;">
-            <input name="个人中心" type="button" style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/UserCenter.png);"/><br/>
-            <input name="个人中心1" type="button" value="个人中心"style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px 
-            #CCC;box-shadow: 0 10px 10px #CCCCCC;"/>
+            <a href="personalcenter.html"> <input name="个人中心" type="button" style="border:0px;background-color:#fbcb2f;width:400px;height:198px;background-image:url(/images/UI/UserCenter.png);"/></a><br/><a href="personalcenter.html"> <input name="个人中心1" type="button" value="个人中心"style="border:0px;background-color:#FFF;width:400px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px
+            #CCC;box-shadow: 0 10px 10px #CCCCCC;"/></a>
             </div>
         </div>
-
 </div>
 </body>
 </html>
