@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/css/DiyCooking.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+body,td,th {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-weight: bold;
+}
+</style>
+<script src= "./libs/angularJS/angular.min.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="todoCtrl">
+<div id="left" style="width:545px;">
+    <div id="title" style="width:200px;">
+    	DIY-添加美食
+    </div>
+    <div id="leftheader">
+        
+          <div style="border-bottom:#FC0 2px solid;width:525px;"><p align="left" >菜名:
+          	<input name="菜名" id="cookingname" style="border:0px;width:400px;" type="text" />
+          	</p>
+          </div>  
+          <div style="border-bottom:#CCC 2px solid;width:525px;"><p>别名:<input name="别名" id="nickname"  style="border:0px;width:400px;" type="text"  /></p></div> 
+             
+          <div style="border-bottom:#FC0 2px solid;width:525px;"><p>口味:<input name="口味" id="flavor"style="border:0px;width:400px;" type="text"  /></p></div>
+     
+          <div style="border-bottom:#CCC 2px solid;width:525px;"><p>类别:<input name="类别" id="category"style="border:0px;width:400px;" type="text"  /></p></div>
+      
+          <div style="border-bottom:#FC0 2px solid;width:525px;"><p>菜系:<input name="菜系" id="cuisine" style="border:0px;width:400px;" type="text"  /></p></div>
+     
+          <div style="border-bottom:#CCC 2px solid;width:525px;"><p>简介:<input name="简介" id="introduction" style="border:0px;width:400px;" type="text"  /></p></div>
+
+          <div style="width:525px;"><p style="margin-left:8px;">详细做法:</p><textarea name="详细做法" id="detailedapproach" cols="70" rows="20"></textarea></div> 
+    </div>
+    <div id="leftfooter">
+        <div id="leftfooter1">
+       	<input name="图片" id="image" type="image" width="306" height="201" />
+        </div>
+        <div id="leftfooter2">
+            <div id="browse">
+              <input name="browse" id="browse1"type="button" value="浏览" />
+            </div>  
+            <div id="uoload">
+              <input name="upload" id="upload1"type="button" value="上传" />
+            </div>
+        </div>
+    </div>   
+</div>
+
+<div id="right">
+   <div id="smallright" style="margin-top:99px;">
+    <div id="right1">
+        <div>
+        
+            <p>&nbsp;食材名称
+            <input type="text" ng-model="name" size="20" placeholder="新增" style="height:50px;border:2px solid #CCC"  onfocus="this.style.border='2px solid yellow';" onblur="this.style.border='2px solid #FC0';"/>
+            &nbsp;&nbsp;食材用量
+        <input type="text" ng-model="content" size="20" placeholder="新增" style="height:50px;border:2px solid #CCC" onfocus="this.style.border='2px solid yellow';" onblur="this.style.border='2px solid #FC0';"/>
+        <input type="button" ng-click = "addItem()" value="新增"style="font-size:20px;height:59px;background-color:#FC0;border:0px;width:80px;"/>
+            </p>
+
+        </div>
+        <p>食材名称&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        食材用量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        删除食材</p>
+
+        <div ng-repeat="x in contentList">      
+            <input type="text" ng-model="x.name"   readonly="readonly" style="height:59px;width:200px;">
+            <input type="text" ng-model="x.content" style="height:59px;width:200px;">
+            <button ng-click="remove($index)" style="width:200px;height:59px;border:0px;background-color:#FC0;font-size:20px;">删除食材</button>
+        </div>
+    </div>
+
+
+       
+
+   </div>
+</div>
+<script>
+var app = angular.module('myApp', []); 
+app.controller('todoCtrl', function($scope) {
+    $scope.todoList = [{todoText:'植物油', done:false}];
+    $scope.todoList1 = [{todoText1:'5g', done:false}];
+	
+	$scope.contentList = new Array();
+	
+
+    $scope.remove = function(index) {
+
+        $scope.contentList.splice(index,1);
+    };
+	
+	$scope.addItem = function(){
+		var newItem = {"name":"","content":0};
+		newItem.name =$scope.name;
+		newItem.content = $scope.content;
+		$scope.contentList.push(newItem);
+	}
+	
+	$scope.item={"name" :"", "content":0};
+	$scope.name="";
+	$scope.conten = 0;
+	
+});
+</script>
+</body>
+</html>

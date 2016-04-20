@@ -1,81 +1,93 @@
-@charset "utf-8";
-div#container{width:auto height:281px;}
+div#container{width:auto;height:281px;}
 div#header{ height:281px; width:50%; float:left;}
 div#menu{height:281px; width:50%; float:left;}
 div#article{height:394px;}
-div#s{height:675px;margin:0px;}
+div#sx{height:675px;margin:0px;}
 div#x{height:453px;}
 div#1{width:33%;float:left;}
-div#2{width:33%;float: left;}
+div#2{width:33%;float:left}
 div#3{width:33%;float:right;}
 body {
 	    margin:0px;
         font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-        font-size:16px;
+        font-size:8px;
 		overflow:scroll;
 
 	    }
-	#s{
-		background:url(/images/UI/bg.png);
+#sx{
+		background-image: url(/images/UI/bg.png);
 	}
-	#x{
+#x{
 		background-color:#F1F1F1;
 	}
-	#article{
+#article{
 		height:394px;
 		}
-	fieldset.select{
+fieldset.select{
         padding: 0px;
         border: none;
         width: 600px;
 		height:36px;
     } 
-    fieldset.search{
+fieldset.search{
         padding: 0px;
         border: none;
         width: 572px;
-        background:url(/images/UI/searchbox.png);
-    } 
-    .search input, .search button {
+        background-image: url(/images/UI/searchbox.png);
+}
+fieldset.search:hover {
+        background-color: transparent;
+}
+.search input, .search button {
         border: none;
-        float:left;
-    }
-    .search .box {
-        height: 39px;
-        width: 542px;
-        margin-right:0px;
+        float: left;
+}
+.search input.box {
+        height: 28px;
+        width:540px;
+        margin-right: 0px;
         padding-right: 0px;
-        background:transparent;
-        margin: 2px;
-    }
-    .search button.btn {
+        background-color: transparent;
+        margin: 1px;
+}
+.search input.box:focus {
+        background-color: transparent;
+        outline: none;
+}
+.search button.btn {
         border: none;
-        width: 22px;
-        height: 22px;
-        margin-top: 10px;
-        background:url(/images/UI/icon-search.png);
-    }
-	.sf-menu li{
+        width: 28px;
+        height: 28px;
+        margin-top: 6px;
+        margin: 1px;
+        background: url(/images/UI/icon-search.png) no-repeat top right;
+}
+.search button.btn:hover {
+        background: url(/images/UI/icon-search.png) no-repeat bottom right;
+}
+#s{
+        width: 540px;
+        height: 28px;
+        background-color: transparent;
+}
+.sf-menu li{
 		display:inline;
 		
 	}
-	.fh5co-sub-menu li{
+.fh5co-sub-menu li{
 		display:block;
 	}
-	ul{
+ul{
 		width:400px;
 	}
-	ul li{
+ul li{
 	float:left;
 	display:block;
 	height:30px;
 	width:100px;
 	}
 
-    #sx{
-        width: 542px;
-        height:39px;
-        font-size: 16px;
-        background-color: transparent;
-    }
+
+
+
 

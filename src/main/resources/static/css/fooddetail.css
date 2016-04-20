@@ -1,0 +1,110 @@
+@charset "utf-8";
+@import url("SmartDietitian/src/main/resources/templates/personalcenter.css");
+div#header{height:300px;}
+div#header1{float:left;width:50%;height:400px;}/* CSS Document */
+div#header2{float:right;width:50%;}
+div#header11{margin-top:100px;margin-left:75px;}
+div#header22{margin-top:50px;}
+
+body {
+	    margin:0px;
+        font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        font-size:16px;
+		color:#666;		
+		overflow:scroll;
+}
+#practice{
+	border:0px;
+	background-color:#FC0;
+	width:300px;
+	height:86px;
+	color:#FFF;
+	font-size:30px; 
+	box-shadow: 0 10px 10px #CCC;
+	box-shadow: 0 10px 10px #CCCCCC;
+	}
+#Foodingredients{
+	border:0px;
+	background-color:#FC0;
+	width:300px;
+	height:86px;
+	color:#FFF;
+	font-size:30px;
+	box-shadow: 0 10px 10px #CCC;
+	box-shadow: 0 10px 10px #CCCCCC;
+	}
+#Nutrientelement{
+    border:0px;
+	background-color:#FC0;
+	width:300px;
+	height:86px;
+	color:#FFF;
+	font-size:30px;
+	box-shadow: 0 10px 10px #CCC;
+	box-shadow: 0 10px 10px #CCCCCC;
+    }
+#id{
+	border:0px;
+	width:400px;
+	}
+#name{
+	border:0px;
+	width:400px;
+	}
+#othername{
+	border:0px;
+	width:400px;
+	}
+#taste{
+	border:0px;
+	width:400px;
+	}
+#kind{
+	border:0px;
+	width:400px;
+	}
+#style{
+	border:0px;
+	width:400px;
+	}
+#feature{
+	border:0px;
+	width:400px;
+	}
+#id1{
+	border-bottom:#CCC 2px solid;
+	width:525px;
+    }
+#nickname1{
+	border-bottom:#CCC 2px solid;
+	width:525px;
+    }
+#category1{
+	border-bottom:#CCC 2px solid;
+	width:525px;
+    }
+#introduction1{
+	border-bottom:#CCC 2px solid;
+	width:525px;
+    }
+#cookingname1{
+	border-bottom:#FC0 2px solid;
+	width:525px;
+    }
+#flavor1{
+	border-bottom:#FC0 2px solid;
+	width:525px;
+	}
+#cuisine1{
+	border-bottom:#FC0 2px solid;
+	width:525px;
+	}
+#practice1{
+	margin-left:50px;
+	}
+#Nutrientelement1{
+	margin-left:50px;
+	}
+#Foodeinggredients1{
+	margin-left:50px;
+	}
