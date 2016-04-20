@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SalerIdPassword {
-    private String ID;
+    private String Id;
     private String PassWord;
 
     public String getID() {
-        return ID;
+        return Id;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.Id = ID;
     }
 
     public String getPassWord() {
@@ -25,4 +25,6 @@ public class SalerIdPassword {
     public void setPassWord(String passWord) {
         PassWord = passWord;
     }
+
+
 }

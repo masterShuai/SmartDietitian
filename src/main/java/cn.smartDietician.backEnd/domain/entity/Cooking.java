@@ -32,11 +32,11 @@ public class Cooking {
     @Column
     private String authorId;//作者的用户id
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -94,10 +94,6 @@ public class Cooking {
 
     public void setHowToCook(String howToCook) {
         this.howToCook = howToCook;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getAuthorId() {

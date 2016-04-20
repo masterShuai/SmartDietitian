@@ -1,88 +1,109 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="smartDietitian">
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 
 
-
-  	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="format-detection" content="telephone=yes"/>
-    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="msapplication-tap-highlight" content="no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<link href="/css/homePage1.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="/css/homePage1.css" rel="stylesheet" type="text/css"/>
+    <script src="/lib/angularJS/angular.min.js"></script>
+    <script src="/js/homePageController.js"></script>
 
 </head>
-<body>
+<body  ng-controller="HomeController">
 <script>
-function goBottom() {
-window.scrollTo(0, document.documentElement.scrollHeight-document.documentElement.clientHeight); 
-}
-function openwin(){
-window.open("signIn.html","newwindow","height=500,width=400,top=200;left=0,toolbar=no,menubar=no, scrollbars=no,resizable=no,location=no, status=no")
-}
+    function goBottom() {
+        window.scrollTo(0, document.documentElement.scrollHeight - document.documentElement.clientHeight);
+    }
+    function openwin() {
+        window.open("signIn.html", "newwindow", "height=500,width=400,top=200;left=0,toolbar=no,menubar=no, scrollbars=no,resizable=no,location=no, status=no")
+    }
 </script>
-		<div id="sx">
-        	<div class="container" >
-                <div id="header">
-					<img src="/images/UI/logo.png" style="position:absolute;left:198px;top:27px;" />
-                </div>
-                    
-                <div id="menu">
-						<nav id="fh5co-menu-wrap" >
-						<ul class="sf-menu" id="fh5co-primary-menu" style="top:32px;font-size:18px;">
-                             <li><input type="button" value="主页"style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;"></li>
-                             <li><input type="button" value="功能" onclick="goBottom()" style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;"></li>
-                             <li><input type="button" value="帮助" style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;"></li>
-                             <li><input type="button" value="登录"onclick="openwin()" style="border:0;font-size:16px;background-color:#F93;color:#FFF;width:70px;height:32PX;"></li>
-						</ul>
-					</nav>
-			  	</div>
-         	</div>
-            <div class="article" >
-            	
-                    <div align="center">
-                    <fieldset class="select">
-                    <input type="button" value="菜品" id="菜品" style="border:0;background-color:transparent;color:#FFF;"/>
-                    <input type="button" value="食材" style="border:0;background-color:transparent;color:#FFF;"/>
-                    <input type="button" value="营养元素" style="border:0;background-color:transparent;color:#FFF;"/>
-                    </fieldset>
-                    </div>
-                    <div>
-                    <fieldset class="search" style="position:absolute;margin-left:402px;">
-                         <input type="text" class="box" name="s" id="s" class="inputText" placeholder="搜索菜品、食材、营养元素"x-webkit-speech/>
-                         <button class="btn" id="btn"title="SEARCH"> </button>
-                    </fieldset>
-                    </div>
-                    <div style="margin-top:200px;margin-left:650px;">
-                    <input name="圆形按钮" type="button" onclick="goBottom()" style="border:#FFF;border-radius:40px;background-image:url(/images/UI/orangeButton.png);width:80px;height:80px;"/>
-                    </div>
-             	
-        	</div>   
-		</div>
-        <div id="x">
-            <div id="1" style="float:left;margin-top:34px;margin-left:33px;">
-              <a href="DiyCooking.html"><input name="DIY" type="button" style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/DIY.png);" /></a><br/>
-              <a href="DiyCooking.html"><input name="DIY1" type="button" value="DIY" style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px; box-shadow: 0 10px 10px
-              #CCC;box-shadow: 0 10px 10px #CCCCCC;" /></a>
-            </div>
-            <div id="2" style="float:left;margin-top:34px;margin-left:33px;">
-             <input name="智能配餐" type="button" style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/smartDietitian.png);"/><br/>
-             <input name="智能配餐1" type="button" value="智能配餐 " style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px 
-              #CCC;box-shadow: 0 10px 10px #CCCCCC;"/>
-            </div>
-            <div id="3" style="float:left;margin-top:34px;margin-left:33px;">
-            <a href="personalcenter.html"> <input name="个人中心" type="button" style="border:0px;background-color:#fbcb2f;width:400px;height:198px;background-image:url(/images/UI/UserCenter.png);"/></a><br/><a href="personalcenter.html"> <input name="个人中心1" type="button" value="个人中心"style="border:0px;background-color:#FFF;width:400px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px
-            #CCC;box-shadow: 0 10px 10px #CCCCCC;"/></a>
-            </div>
+<div id="sx" ng-init="loadPaper()">
+    <div class="container">
+        <div id="header">
+            <img src="/images/UI/logo.png" style="position:absolute;left:198px;top:27px;"/>
         </div>
+        <div id="menu">
+            <nav id="fh5co-menu-wrap">
+                <ul class="sf-menu" id="fh5co-primary-menu" style="top:32px;font-size:18px;">
+                    <li class="daohang"><input type="button" value="主页"
+                               style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;">
+                    </li>
+                    <li class="daohang"><input type="button"  value="功能" onclick="goBottom()"
+                               style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;">
+                    </li>
+                    <li class="daohang"><input type="button" value="帮助"
+                               style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;">
+                    </li>
+                    <li class="daohang"><input type="button" value="登录" onclick="openwin()"
+                               style="border:0;font-size:16px;background-color:#F93;color:#FFF;width:70px;height:32PX;">
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="article">
+        <div align="center">
+            <fieldset class="select">
+                <input type="button" value="菜品" id="菜品" ng-click="check(1)" style="border:0;background-color:transparent;color:#FFF;"/>
+                <input type="button" value="食材"  ng-click="check(2)" style="border:0;background-color:transparent;color:#FFF;"/>
+                <input type="button" value="营养元素" ng-click="check(3)" style="border:0;background-color:transparent;color:#FFF;"/>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset class="search" style="position:absolute;margin-left:402px;">
+                <input type="text" class="box" name="s" id="s" class="inputText" ng-model="userInput" placeholder="搜索菜品、食材、营养元素" autocomplete="off"
+                       x-webkit-speech/>
+               <!-- <select style="width: 540px;height: auto"
+                        ng-model = "userSelect"
+                        class="form-control"
+                        ng-options = "a.cookingId as a.cookingName for a in list" >
+                </select >-->
+                <button class="btn" ng-click="toSearch()" id="btn" title="SEARCH"></button>
+            </fieldset>
+        </div>
+        <div style="margin-top:200px;margin-left:650px;">
+            <input name="圆形按钮" type="button" onclick="goBottom()"
+                   style="border:#FFF;border-radius:40px;background-image:url(/images/UI/orangeButton.png);width:80px;height:80px;"/>
+        </div>
+    </div>
+</div>
+<div id="x">
+    <div id="1" style="float:left;margin-top:34px;margin-left:33px;">
+        <a href="DiyCooking.html"><input name="DIY" type="button"
+                                         style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/DIY.png);"/></a><br/>
+        <a href="DiyCooking.html"><input name="DIY1" type="button" value="DIY" style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px; box-shadow: 0 10px 10px
+              #CCC;box-shadow: 0 10px 10px #CCCCCC;"/></a>
+    </div>
+    <div id="2" style="float:left;margin-top:34px;margin-left:33px;">
+        <input name="智能配餐" type="button"
+               style="border:0px;background-color:#fbcb2f;width:412px;height:198px;background-image:url(/images/UI/smartDietitian.png);"/><br/>
+        <input name="智能配餐1" type="button" value="智能配餐 " style="border:0px;background-color:#FFF;width:412px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px
+              #CCC;box-shadow: 0 10px 10px #CCCCCC;"/>
+    </div>
+    <div id="3" style="float:left;margin-top:34px;margin-left:33px;">
+        <a href="personalcenter.html"> <input name="个人中心" type="button"
+                                              style="border:0px;background-color:#fbcb2f;width:400px;height:198px;background-image:url(/images/UI/UserCenter.png);"/></a><br/><a
+            href="personalcenter.html"> <input name="个人中心1" type="button" value="个人中心" style="border:0px;background-color:#FFF;width:400px;height:86px;color:#FC0;font-size:30px;box-shadow: 0 10px 10px
+            #CCC;box-shadow: 0 10px 10px #CCCCCC;"/></a>
+    </div>
+</div>
 </div>
 </body>
 </html>

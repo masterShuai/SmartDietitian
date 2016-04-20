@@ -19,4 +19,8 @@ public class NutritionContent {
         this.content = content;
         this.nutritionUnit = unit;
     }
+
+    public NutritionContent(){
+
+    }
 }

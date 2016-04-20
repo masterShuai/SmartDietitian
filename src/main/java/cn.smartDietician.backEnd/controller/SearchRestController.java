@@ -41,8 +41,6 @@ public class SearchRestController {
 
         //初始化部分信息
         System.out.println("getAllNutritionForValitation-----------");
-
-
         return ResponseContent.makeSuccessResponse(SerachService.getAllNutrition());
     }
 
@@ -190,6 +188,7 @@ public class SearchRestController {
     public ResponseContent saveCooking(@RequestBody SalerCookingReqDate paras,
                                        HttpServletRequest request,
                                        HttpSession session) {
+        System.out.println("save start-----------");
         //初始化部分信息
         System.out.println("getSaveCookingValitation-----------");
         String userId;

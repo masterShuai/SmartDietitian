@@ -6,11 +6,12 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
         allNutrition: "/Search/Nutrition/all"
         , nutritionById: "/Search/Nutrition/byId"
         , nutritionByName: "/Search/Nutrition/byName"
-        , allFood: "/Search/Nutrition/all"
-        , foodById: "/Search/Nutrition/byId"
-        , foodByName: "/Search/Nutrition/byName"
+        , allFood: "/Search/Food/all"
+        , foodById: "/Search/Food/byId"
+        , foodByName: "/Search/Food/byName"
         , register: "/User/register"
         , login: "/User/login"
+        , addCooking: "/Search/Cooking/save"
     };
 
     $scope.phones = [
@@ -42,7 +43,7 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
     };
     //请求详细食材
     $scope.sendFoodData = {
-        "foodId": 0,
+        "foodId": 1,
         "foodName": ""
     };
     //请求菜品
@@ -52,8 +53,7 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
         "cookingName": ""
     };
     //请求登录
-    $scope.sendLogin = {"ID": "wangshuai", "PassWord": "1234"};
-
+    $scope.sendLogin = {"id": "wangshuai", "passWord": "1234"};
     //注册用户数据
     $scope.sendRegister = {
         "id": "wangshuai",
@@ -73,10 +73,43 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
     };
 
 
+    //请求添加菜品
+    var newCooking = {
+        "id": 0,
+        "name": "米饭",
+        "otherName": "大米",
+        "taste": "无",
+        "kind": "主食",
+        "style": "无",
+        "feature": "中国普通主食",
+        "howToCook": "1将稻米洗净,放入锅中加少量水",
+        "authorId": "",
+        "nutritionContent": [{
+            "nutritionId": "",
+            "nutritionName": "",
+            "content": 0,
+            "nutritionUnit": ""
+        }],
+        "foodContent": [
+            {
+                "foodId": "3",
+                "foodName": "稻米",
+                "content": 100
+
+            },
+            {
+                "foodId": "1404",
+                "foodName": "水",
+                "content": 200
+
+            }
+        ]
+    }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //接受营养元素详细信息的格式
-    $scope.NutritionDetail = {
+        $scope.NutritionDetail = {
         "id": "",
         "name": "",
         "unit": "",
@@ -150,7 +183,11 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
         }]
     };
 
+
     //菜品名称列表
+    {
+
+    }
 
 
     $http.post($scope.urls.allNutrition)
@@ -180,7 +217,7 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
     }
 
     $scope.SearchNutritionById = function (id) {
-        $scope.NutritionReqData.nutritionId = id;
+        $scope.sendNutritionData.nutritionId = id;
         $scope.SearchDetailResult = false;
         $http.post($scope.urls.nutritionById, $scope.sendNutritionData)
             .success(function (response) {
@@ -205,9 +242,25 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
             });
     }
 
+    $scope.addCooking = function () {
+        //$scope.sendRegister.birthday.setFullYear(1993,12,15);
+        $http.post($scope.urls.addCooking, newCooking)
+            .success(function (response) {
+                alert(response.content);
+            });
+    }
+
     $scope.isDetailDivVisible = function () {
         return $scope.SearchDetailResult;
     }
 
+
+    $scope.SearchFoodById = function () {
+        $http.post($scope.urls.foodById, $scope.sendFoodData)
+            .success(function (response) {
+                $scope.NutritionDetail = response.content;
+                $scope.SearchDetailResult = true;
+            });
+    }
 });
 

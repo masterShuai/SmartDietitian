@@ -5,7 +5,6 @@ import cn.smartDietician.backEnd.service.SerachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,11 +27,11 @@ public class SimpleRestController {
         return "Hello World!";
     }
 
-    //URL中的变量
+    /*//URL中的变量
     @RequestMapping("/users/{username}")
     public String userProfile(@PathVariable("username") String username) {
         return String.format("user %s", username);
-    }
+    }*/
 
     @RequestMapping("/posts/{id}")
 
@@ -40,7 +39,7 @@ public class SimpleRestController {
         return String.format("post %d", id);
     }
 
-    //支持HTTP方法
+  /*  //支持HTTP方法
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet() {
         return "Login Page";
@@ -51,5 +50,5 @@ public class SimpleRestController {
         return "Login Post Request";
     }
 
-
+*/
 }

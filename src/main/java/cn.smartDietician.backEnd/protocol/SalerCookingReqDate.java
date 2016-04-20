@@ -12,7 +12,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SalerCookingReqDate {
 
-    private long id;//菜品编号
+    private Long id;//菜品编号
     private String name;//菜品名称
     private String otherName;//菜品别名
     private String taste;//口味[酸 甜 苦 辣 咸]

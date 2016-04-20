@@ -16,4 +16,8 @@ public class FoodContent {
         this.foodName = foodName;
         this.content = content;
     }
+
+    public FoodContent(){
+
+    }
 }

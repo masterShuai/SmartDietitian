@@ -31,13 +31,11 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseContent login(@RequestBody SalerIdPassword idPassword) {
-        System.out.println(idPassword.getID() + " " + idPassword.getPassWord());
-
+    public ResponseContent login(@RequestBody SalerIdPassword idPassword,
+                                 HttpServletRequest request,
+                                 HttpSession session) {
         if (userService.doLogin(idPassword)) {
-            //session.setAttribute("User",idPassword.getID());,
-            //HttpServletRequest request,
-            //HttpSession session
+            session.setAttribute("User",idPassword.getID());
             return ResponseContent.makeSuccessResponse("success!");
         } else {
             return ResponseContent.makeFailResponse("登录失败!");

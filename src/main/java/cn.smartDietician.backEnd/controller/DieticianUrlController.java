@@ -1,7 +1,10 @@
 package cn.smartDietician.backEnd.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by wangshuai on 2016/4/17.
@@ -29,4 +32,14 @@ public class DieticianUrlController {
 
     @RequestMapping("/signIn")
     public String signin(){ return "signIn";}
+
+
+
+    @RequestMapping(value = "/searchResult",method= RequestMethod.GET)
+    public String sitExamSingleAnswer(@RequestParam(value = "searchContent",
+            required=true) String content, Model model)
+    {
+        model.addAttribute("searchContent",content);
+        return "searchResult";
+    }
 }

@@ -77,10 +77,10 @@ fieldset.search:hover {
 .fh5co-sub-menu li{
 		display:block;
 	}
-ul{
+#fh5co-primary-menu{
 		width:400px;
 	}
-ul li{
+.daohang{
 	float:left;
 	display:block;
 	height:30px;

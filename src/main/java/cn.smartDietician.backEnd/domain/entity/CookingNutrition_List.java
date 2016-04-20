@@ -217,4 +217,31 @@ public class CookingNutrition_List {
         }
         return result;
     }
+
+    public CookingNutrition_List() {
+       this.water = new Hashtable<Long, Float>();//水分g 1
+       this.protein = new Hashtable<Long, Float>(); //蛋白质(g) 2
+       this.fat = new Hashtable<Long, Float>(); //脂肪(g) 3
+       this.carbohydrate = new Hashtable<Long, Float>(); //碳水化合物(g) 4
+       this.energy = new Hashtable<Long, Float>(); //能量(大卡) 5
+       this.DF = new Hashtable<Long, Float>(); //膳食纤维(g) 6
+       this.K = new Hashtable<Long, Float>();//钾(mg) 7
+       this.Na = new Hashtable<Long, Float>();//钠(mg) 8
+       this.Mg = new Hashtable<Long, Float>();//镁(mg) 9
+       this.Ga = new Hashtable<Long, Float>();//钙(mg) 10
+       this.P = new Hashtable<Long, Float>();//磷(mg) 11
+       this.Fe = new Hashtable<Long, Float>();//铁(mg) 12
+       this.Zn = new Hashtable<Long, Float>();//锌(mg) 13
+       this.Cu = new Hashtable<Long, Float>();//铜(mg) 14
+       this.Mn = new Hashtable<Long, Float>();//锰(mg) 15
+       this.Se = new Hashtable<Long, Float>();//硒(μg) 16
+       this.Co = new Hashtable<Long, Float>();//钴(μg) 17
+       this.VA = new Hashtable<Long, Float>(); //维生素A(μg) 18
+       this.VB1 = new Hashtable<Long, Float>(); //维生素B1,硫胺素(mg) 19
+       this.VB2 = new Hashtable<Long, Float>(); //维生素B2,核黄素(mg) 20
+       this.VB3 = new Hashtable<Long, Float>(); //维生素B3尼克酸,烟酸(mg) 21
+       this.VC = new Hashtable<Long, Float>(); //维生素C抗坏血酸(mg) 22
+       this.VE = new Hashtable<Long, Float>(); //维生素E,核黄素(mg) 23
+       this.cholesterol = new Hashtable<Long, Float>(); //胆固醇(mg) 24
+    }
 }

@@ -299,7 +299,8 @@ public class SerachService {
         Hashtable<String,Float> cookingNutritions = new Hashtable<>();
         try{
             //将菜品信息存入菜品表
-            //cooking.setId(cookingReqDate.getId());
+            cooking.setId((long) (cookingList.size()+1));
+            System.out.println("ID:" + cooking.getId());
             cooking.setName(cookingReqDate.getName());
             cooking.setOtherName(cookingReqDate.getOtherName());
             cooking.setTaste(cookingReqDate.getTaste());
@@ -311,34 +312,42 @@ public class SerachService {
             cookingRepository.save(cooking);
             state = 1;
             //加入内存
-            cooking.setId(cookingList.size()+1);
             cookingList.add(cooking);
+            cooking = cookingList.get(cookingList.size()-1);
             state = 2;
 
             //将菜品食材用量存入菜品-食材表,并统计菜品营养含量
             List<Cooking_Food> cookingFoods = new ArrayList<>();
+
             //遍历前端请求数据中,菜品选用食材List
             List<FoodContent> foodContents = cookingReqDate.getFoodContent();
+            System.out.println("1");
             Cooking_Food cf=new Cooking_Food();
             for (int i=0;i<foodContents.size();i++){
                 cf.setUionPK(new CookingFoodUionPK(foodContents.get(i).foodId,cooking.getId()));
                 cf.setContent(foodContents.get(i).content);
                 cookingFoods.add(cf);
+                //将菜品食材用量存入菜品-食材表
+                cookingFoodRepository.save(cf);
+                System.out.println("2."+i);
                 //加入内存
                 cookingFoodList.add(cf);
                 List<NutritionContent> nutritionContents = getContentByFoodId(foodContents.get(i).foodId);
                 for(int j=0;j<nutritionContents.size();j++){
+                    System.out.println("3."+i+"."+j);
                     if(cookingNutritions.get(nutritionContents.get(j).nutritionId) != null) {
+                        System.out.println("3."+i+"."+j+"true");
                         cookingNutritions.put(nutritionContents.get(j).nutritionId
-                                , nutritionContents.get(j).content + cookingNutritions.get(j));
+                                , nutritionContents.get(j).content/100*foodContents.get(i).content+
+                                cookingNutritions.get(nutritionContents.get(j).nutritionId));
                     }else{
+                        System.out.println("3."+i+"."+"false");
                         cookingNutritions.put(nutritionContents.get(j).nutritionId
-                                , nutritionContents.get(j).content);
+                                , nutritionContents.get(j).content/100*foodContents.get(i).content);
                     }
                 }
             }
-            //将菜品食材用量存入菜品-食材表
-            cookingFoodRepository.save(cookingFoods);
+
             state = 3;
 
             //菜品-营养含量存入数据库
@@ -346,16 +355,32 @@ public class SerachService {
             Cooking_Nutrition cn = new Cooking_Nutrition();
             for(Integer k = 1;k<nutritionCount;k++){
                 if(cookingNutritions.get(k.toString())!=null){
+
+                    System.out.println(k.toString()+":"+cookingNutritions.get(k.toString()));
+
                     cn.setUionPK(new CookingNutritionUionPK(cooking.getId(),k.toString()));
                     cn.setContent(cookingNutritions.get(k.toString()));
+
+                    System.out.println(cn.getUionPK().getNutritionId()+":"
+                            +cn.getUionPK().getCookingId()+":"+cn.getContent());
+
                     cooking_Nutritions.add(cn);
-                    cookingNutritionHashTable.addNewItem(k.toString(),cooking.getId(),cn.getContent());
+                    System.out.println("add ArrayList over");
+
+
+                    cookingNutritionHashTable.addNewItem(cn.getUionPK().getNutritionId(),
+                            cn.getUionPK().getCookingId(),
+                            cn.getContent());
+                    System.out.println("add HashTable over");
+                    state =4;
                 }
+                cookingNutritionRepository.save(cn);
+                System.out.println("add DataBase over");
             }
-            state = 4;
-            cookingNutritionRepository.save(cooking_Nutritions);
+
 
         }catch (Exception E){
+            System.out.println(E.getMessage()+E.toString());
             System.out.println("save cooking error state:"+state);
             if (state>=1){
                 //恢复菜品数据库 到添加菜品请求之前
@@ -381,7 +406,7 @@ public class SerachService {
                     for(int j=0;j<nutritionContents.size();j++){
                         if(cookingNutritions.get(nutritionContents.get(j).nutritionId) != null) {
                             cookingNutritions.put(nutritionContents.get(j).nutritionId
-                                    , nutritionContents.get(j).content + cookingNutritions.get(j));
+                                    , nutritionContents.get(j).content + cookingNutritions.get(nutritionContents.get(j).nutritionId));
                         }else{
                             cookingNutritions.put(nutritionContents.get(j).nutritionId
                                     , nutritionContents.get(j).content);

@@ -85,12 +85,7 @@ public class UserService {
     @Cacheable({"doLogin"})
     public boolean doLogin(SalerIdPassword ip) {
         try{
-            System.out.println("收到的ID"+ip.getID());
-            System.out.println("收到的PW"+ip.getPassWord());
-
             String pw = UserIdPassword.get(ip.getID());
-            System.out.println("列表中的pw"+pw);
-
             if (pw.equals(ip.getPassWord()))
                 return true;
             else
