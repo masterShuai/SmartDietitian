@@ -10,6 +10,7 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
         , foodById: "/Search/Nutrition/byId"
         , foodByName: "/Search/Nutrition/byName"
         , register: "/User/register"
+        , login: "/User/login"
     };
 
     $scope.phones = [
@@ -51,7 +52,7 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
         "cookingName": ""
     };
     //请求登录
-    $scope.sendLogin = {"ID":"123","password":"123"};
+    $scope.sendLogin = {"ID": "wangshuai", "PassWord": "1234"};
 
     //注册用户数据
     $scope.sendRegister = {
@@ -69,7 +70,7 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
         "nutritionMin": null,
         "nutritionMan": null,
         "cookingContent": null
-    }
+    };
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,7 +148,9 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
             "foodId": 0,
             "foodName": ""
         }]
-    }
+    };
+
+    //菜品名称列表
 
 
     $http.post($scope.urls.allNutrition)
@@ -194,6 +197,13 @@ mainApp.controller('PhoneListCtrl', function ($scope, $http) {
             });
     }
 
+    $scope.login = function () {
+        //$scope.sendRegister.birthday.setFullYear(1993,12,15);
+        $http.post($scope.urls.login, $scope.sendLogin)
+            .success(function (response) {
+                alert(response.content);
+            });
+    }
 
     $scope.isDetailDivVisible = function () {
         return $scope.SearchDetailResult;

@@ -20,6 +20,8 @@ public class CookingFoodUionPK implements Serializable {
         this.cookingId = cookingId;
     }
 
+    public CookingFoodUionPK(){}
+
     public long getFoodId() {
         return foodId;
     }

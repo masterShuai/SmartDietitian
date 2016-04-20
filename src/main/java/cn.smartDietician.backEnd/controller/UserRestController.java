@@ -20,58 +20,62 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value="/test", method= RequestMethod.GET)
-    public ResponseContent test(){
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public ResponseContent test() {
         return ResponseContent.makeSuccessResponse(new SalerUserReqDate());
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ResponseContent login(@RequestBody SalerIdPassword idPassword,
-                                 HttpServletRequest request,
-                                 HttpSession session) {
-        if (userService.doLogin(idPassword)){
-            session.setAttribute("User",idPassword.getID());
+    @RequestMapping(value = "/getIdPw", method = RequestMethod.GET)
+    public ResponseContent getIdPw() {
+        return ResponseContent.makeSuccessResponse(new SalerIdPassword());
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseContent login(@RequestBody SalerIdPassword idPassword) {
+        System.out.println(idPassword.getID() + " " + idPassword.getPassWord());
+
+        if (userService.doLogin(idPassword)) {
+            //session.setAttribute("User",idPassword.getID());,
+            //HttpServletRequest request,
+            //HttpSession session
             return ResponseContent.makeSuccessResponse("success!");
-        }else{
-            return ResponseContent.makeFailResponse();
+        } else {
+            return ResponseContent.makeFailResponse("登录失败!");
         }
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseContent register(@RequestBody SalerUserReqDate userReqDate) {
         System.out.println("start register-----------");
         if (userService.addUser(userReqDate)) {
             System.out.println("register success-----------");
             return ResponseContent.makeSuccessResponse("success!");
-        }
-        else{
+        } else {
             System.out.println("register false-----------");
-            return ResponseContent.makeFailResponse();
+            return ResponseContent.makeFailResponse("注册失败");
         }
     }
 
-    @RequestMapping(value = "/getTodayCooking",method = RequestMethod.POST)
+    @RequestMapping(value = "/getTodayCooking", method = RequestMethod.POST)
     public ResponseContent getTodayCooking(HttpServletRequest request,
                                            HttpSession session) {
         String userId;
-        if(session.getAttribute("User")!=null){
+        if (session.getAttribute("User") != null) {
             userId = session.getAttribute("User").toString();
             return ResponseContent.makeSuccessResponse(userService.getTodayDiet(userId));
-        }
-        else
+        } else
             return ResponseContent.makeFailResponse();
     }
 
-    @RequestMapping(value = "/setTodayCooking",method = RequestMethod.POST)
+    @RequestMapping(value = "/setTodayCooking", method = RequestMethod.POST)
     public ResponseContent getTodayCooking(@RequestBody CookingContent cookingContent,
                                            HttpServletRequest request,
                                            HttpSession session) {
         String userId;
-        if(session.getAttribute("User")!=null){
+        if (session.getAttribute("User") != null) {
             userId = session.getAttribute("User").toString();
             return ResponseContent.makeSuccessResponse(userService.addTodayDiet(userId, cookingContent));
-        }
-        else
+        } else
             return ResponseContent.makeFailResponse();
     }
 }

@@ -15,6 +15,8 @@ public class FoodNutritionUionPK implements Serializable {
     @Column
     private long foodId;
 
+    public FoodNutritionUionPK(){}
+
     public String getNutritionId() {
         return nutritionId;
     }

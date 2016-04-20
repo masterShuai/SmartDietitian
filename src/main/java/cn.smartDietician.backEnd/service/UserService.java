@@ -67,13 +67,13 @@ public class UserService {
         System.out.println(String.format("加载到用户-密码数量：%d", UserIdPassword.size()));
         //读取全部用户营养推荐摄入量
         userNutritionMinList = helper.iterableToList(userNutritionMinRepository.findAll());
-        System.out.println(String.format("加载到用户摄入下限数量：%d", userList.size()));
+        System.out.println(String.format("加载到用户摄入下限数量：%d", userNutritionMinList.size()));
         //读取全部用户营养摄入量上限
         userNutritionMaxList = helper.iterableToList(userNutritionMaxRepository.findAll());
-        System.out.println(String.format("加载到用户摄入上限数量：%d", userList.size()));
+        System.out.println(String.format("加载到用户摄入上限数量：%d", userNutritionMaxList.size()));
         //读取全部用户原创菜品表
         userCookingList = helper.iterableToList(userCookingRepository.findAll());
-        System.out.println(String.format("加载到用户原创菜品数量：%d", userList.size()));
+        System.out.println(String.format("加载到用户原创菜品数量：%d", userCookingList.size()));
     }
 
     /**
@@ -84,10 +84,22 @@ public class UserService {
      */
     @Cacheable({"doLogin"})
     public boolean doLogin(SalerIdPassword ip) {
-        if (UserIdPassword.get(ip.getID().trim()).equals(ip.getPassWord().trim()))
-            return true;
-        else
+        try{
+            System.out.println("收到的ID"+ip.getID());
+            System.out.println("收到的PW"+ip.getPassWord());
+
+            String pw = UserIdPassword.get(ip.getID());
+            System.out.println("列表中的pw"+pw);
+
+            if (pw.equals(ip.getPassWord()))
+                return true;
+            else
+                return false;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
             return false;
+        }
+
     }
 
     /**
