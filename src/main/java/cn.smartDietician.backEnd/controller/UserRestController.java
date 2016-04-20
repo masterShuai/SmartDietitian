@@ -6,10 +6,7 @@ import cn.smartDietician.backEnd.protocol.SalerIdPassword;
 import cn.smartDietician.backEnd.protocol.SalerUserReqDate;
 import cn.smartDietician.backEnd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,15 +21,12 @@ public class UserRestController {
     private UserService userService;
 
     @RequestMapping(value="/test", method= RequestMethod.GET)
-    public ResponseContent test(@RequestParam(value = "id", required=true) int start,
-                                 HttpServletRequest request,
-                                 HttpSession session) {
-
-        return ResponseContent.makeSuccessResponse("success!");
+    public ResponseContent test(){
+        return ResponseContent.makeSuccessResponse(new SalerUserReqDate());
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ResponseContent login(@RequestParam SalerIdPassword idPassword,
+    public ResponseContent login(@RequestBody SalerIdPassword idPassword,
                                  HttpServletRequest request,
                                  HttpSession session) {
         if (userService.doLogin(idPassword)){
@@ -43,17 +37,20 @@ public class UserRestController {
         }
     }
 
-    @RequestMapping(value = "register",method = RequestMethod.POST)
-    public ResponseContent register(@RequestParam SalerUserReqDate userReqDate) {
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public ResponseContent register(@RequestBody SalerUserReqDate userReqDate) {
+        System.out.println("start register-----------");
         if (userService.addUser(userReqDate)) {
+            System.out.println("register success-----------");
             return ResponseContent.makeSuccessResponse("success!");
         }
         else{
+            System.out.println("register false-----------");
             return ResponseContent.makeFailResponse();
         }
     }
 
-    @RequestMapping(value = "getTodayCooking",method = RequestMethod.POST)
+    @RequestMapping(value = "/getTodayCooking",method = RequestMethod.POST)
     public ResponseContent getTodayCooking(HttpServletRequest request,
                                            HttpSession session) {
         String userId;
@@ -65,8 +62,8 @@ public class UserRestController {
             return ResponseContent.makeFailResponse();
     }
 
-    @RequestMapping(value = "setTodayCooking",method = RequestMethod.POST)
-    public ResponseContent getTodayCooking(@RequestParam CookingContent cookingContent,
+    @RequestMapping(value = "/setTodayCooking",method = RequestMethod.POST)
+    public ResponseContent getTodayCooking(@RequestBody CookingContent cookingContent,
                                            HttpServletRequest request,
                                            HttpSession session) {
         String userId;

@@ -35,7 +35,7 @@ public class UserNutritionUionPK implements Serializable {
     public boolean equals(Object obj) {
         if(obj instanceof UserNutritionUionPK){
             UserNutritionUionPK pk=(UserNutritionUionPK)obj;
-            if(this.nutritionId.trim().equals(pk.nutritionId.trim())&&this.userId.trim().equals(pk.userId.trim())){
+            if(this.nutritionId.equals(pk.nutritionId)&&this.userId.equals(pk.userId)){
                 return true;
             }
         }
@@ -50,5 +50,8 @@ public class UserNutritionUionPK implements Serializable {
     public UserNutritionUionPK(String userId, String nutritionId) {
         this.userId = userId;
         this.nutritionId = nutritionId;
+    }
+    public UserNutritionUionPK(){
+
     }
 }

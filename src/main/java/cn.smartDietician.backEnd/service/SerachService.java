@@ -299,7 +299,7 @@ public class SerachService {
         Hashtable<String,Float> cookingNutritions = new Hashtable<>();
         try{
             //将菜品信息存入菜品表
-            cooking.setId(cookingReqDate.getId());
+            //cooking.setId(cookingReqDate.getId());
             cooking.setName(cookingReqDate.getName());
             cooking.setOtherName(cookingReqDate.getOtherName());
             cooking.setTaste(cookingReqDate.getTaste());
@@ -311,6 +311,7 @@ public class SerachService {
             cookingRepository.save(cooking);
             state = 1;
             //加入内存
+            cooking.setId(cookingList.size()+1);
             cookingList.add(cooking);
             state = 2;
 

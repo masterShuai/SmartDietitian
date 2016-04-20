@@ -2,19 +2,20 @@ package cn.smartDietician.backEnd.protocol;
 
 import cn.smartDietician.backEnd.domain.entity.CookingContent;
 import cn.smartDietician.backEnd.domain.entity.NutritionContent;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by wangshuai on 2016/4/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalerUserReqDate {
     private String id; //用户名
     private String name; //昵称
     private String password; //密码
     private String sex; //性别
-    private Date birthday;  //出身日期
+    private String birthday;  //出身日期
     private float weight;  //体重(千克)
     private boolean pregnant;  //是否怀孕
     private boolean lactation;  //是否处于哺乳期
@@ -57,11 +58,11 @@ public class SalerUserReqDate {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -103,5 +104,29 @@ public class SalerUserReqDate {
 
     public void setManualWork(int manualWork) {
         this.manualWork = manualWork;
+    }
+
+    public List<NutritionContent> getNutritionMin() {
+        return nutritionMin;
+    }
+
+    public void setNutritionMin(List<NutritionContent> nutritionMin) {
+        this.nutritionMin = nutritionMin;
+    }
+
+    public List<NutritionContent> getNutritionMan() {
+        return nutritionMan;
+    }
+
+    public void setNutritionMan(List<NutritionContent> nutritionMan) {
+        this.nutritionMan = nutritionMan;
+    }
+
+    public List<CookingContent> getCookingContent() {
+        return cookingContent;
+    }
+
+    public void setCookingContent(List<CookingContent> cookingContent) {
+        this.cookingContent = cookingContent;
     }
 }
