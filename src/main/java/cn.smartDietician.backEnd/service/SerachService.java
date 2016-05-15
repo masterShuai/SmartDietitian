@@ -142,7 +142,6 @@ public class SerachService {
         List<SalerNutritionListReqData> salerNutritionList = new ArrayList<>();
         SalerNutritionListReqData sn = new SalerNutritionListReqData();
         for(int i=0;i<nutritionList.size();i++){
-            nutritionList.get(i);
             if(nutritionList.get(i).getName().toLowerCase().contains(nutritionName.trim().toLowerCase())) {
                 sn.setNutritionId(nutritionList.get(i).getId());
                 sn.setNutritionName(nutritionList.get(i).getName());
@@ -208,12 +207,12 @@ public class SerachService {
         List<SalerFoodListReqDate> salerFoodList = new ArrayList<>();
         SalerFoodListReqDate fn = new SalerFoodListReqDate();
         for(int i=0;i<foodList.size();i++){
-            foodList.get(i);
             if(foodList.get(i).getName().toLowerCase().contains(foodName.trim().toLowerCase())) {
                 fn.setFoodId(foodList.get(i).getId());
                 fn.setFoodName(foodList.get(i).getName());
                 salerFoodList.add(fn);
-
+//                System.out.println(fn.getFoodId()+fn.getFoodName());
+                fn=new SalerFoodListReqDate();
             }
         }
         return salerFoodList;
@@ -278,7 +277,6 @@ public class SerachService {
         List<SalerCookingListReqDate> salerCookingList = new ArrayList<>();
         SalerCookingListReqDate cn = new SalerCookingListReqDate();
         for(int i=0;i<cookingList.size();i++){
-            cookingList.get(i);
             if(cookingList.get(i).getName().toLowerCase().contains(cookingName.trim().toLowerCase())) {
                 cn.setCookingId(cookingList.get(i).getId());
                 cn.setCookingName(cookingList.get(i).getName());

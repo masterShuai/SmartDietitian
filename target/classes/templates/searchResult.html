@@ -1,354 +1,153 @@
 <!DOCTYPE html>
-<html  ng-app="smartDietitian">
-<head lang="en" ng-controller="HomeController">
+<html xmlns:th="">
+<head lang="zh">
     <meta charset="UTF-8">
     <!--<link href="./css/fooddetail.css" rel="stylesheet" type="text/css">-->
-    <link href="./lib/Bookstrap/dist/js/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="./lib/Bookstrap/dist/js/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="./lib/Bookstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/lib/angularJS/angular.min.js"></script>
-    <script src="/js/homePageController.js"></script>
+    <link href="/lib/Bookstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./lib/angularJS/angular.min.js"></script>
+    <script src="./js/homePageController.js"></script>
     <title></title>
 </head>
-<body>
-
+<body ng-app="smartDietitian" ng-controller="HomeController" ng-init="search()">
 <div class="container-fluid">
+
     <div class="row-fluid">
         <div class="span12">
             <div class="page-header">
-                <h1>
+                <button class="btn" type="button" ng-click="goHome()">返回主页</button>
+                <h1 style="text-align:center;">
                     智能营养师
-                    <small>页面副标题</small>
+                    <small>查询结果页面</small>
                 </h1>
             </div>
             <ul class="thumbnails">
-                <li class="span4">
+                <li class="col-md-4">
                     <div class="thumbnail">
-                        <img alt="300x200" src="img/people.jpg"/>
-
                         <div class="caption">
                             <h3>
-                                缩略图标题
+                                菜品
                             </h3>
-
-                            <p>
-                                <a class="btn btn-primary" href="#">动作</a> <a class="btn" href="#">动作</a>
-                            </p>
                         </div>
                     </div>
                 </li>
-                <li class="span4">
+                <li class="col-md-4">
                     <div class="thumbnail">
-                        <img alt="300x200" src="img/city.jpg"/>
-
                         <div class="caption">
                             <h3>
-                                缩略图标题
+                                食材
                             </h3>
-
-                            <p>
-                                <a class="btn btn-primary" href="#">动作</a> <a class="btn" href="#">动作</a>
-                            </p>
                         </div>
                     </div>
                 </li>
-                <li class="span4">
+                <li class="col-md-4">
                     <div class="thumbnail">
-                        <img alt="300x200" src="img/sports.jpg"/>
-
+                        <!--<img alt="300x200" src="img/sports.jpg"/>-->
                         <div class="caption">
                             <h3>
-                                缩略图标题
+                                营养元素
                             </h3>
-
-                            <p>
-                                <a class="btn btn-primary" href="#">动作</a> <a class="btn" href="#">动作</a>
-                            </p>
                         </div>
                     </div>
                 </li>
             </ul>
             <div class="row-fluid">
-                <div class="span4">
+                <div class="col-md-4">
                     <h3>
-                        菜品
+                        已找到菜品:{{cookingContent.length}}个
                     </h3>
                     <table class="table">
                         <thead>
                         <tr>
                             <th>
-                                编号
+                               序号
                             </th>
                             <th>
-                                产品
+                                名称
                             </th>
-                            <th>
-                                交付时间
-                            </th>
-                            <th>
-                                状态
-                            </th>
+                           <th>
+                               操作
+                           </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="item in cookingContent" class="success">
                             <td>
-                                1
+                                {{$index+1}}
                             </td>
                             <td>
-                                TB - Monthly
+                                {{item.cookingName}}
                             </td>
                             <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Default
-                            </td>
-                        </tr>
-                        <tr class="success">
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Approved
-                            </td>
-                        </tr>
-                        <tr class="error">
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                02/04/2012
-                            </td>
-                            <td>
-                                Declined
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>
-                                3
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                03/04/2012
-                            </td>
-                            <td>
-                                Pending
-                            </td>
-                        </tr>
-                        <tr class="info">
-                            <td>
-                                4
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                04/04/2012
-                            </td>
-                            <td>
-                                Call in to confirm
+                                <button ng-click="cookingDetail(item.cookingId)">查看详情</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="span4">
+                <div class="col-md-4">
                     <h3>
-                        食材
+                        已找到食材:{{foodContent.length}}个
                     </h3>
                     <table class="table">
                         <thead>
                         <tr>
                             <th>
-                                编号
+                                序号
                             </th>
                             <th>
-                                产品
+                                名称
                             </th>
                             <th>
-                                交付时间
-                            </th>
-                            <th>
-                                状态
+                                操作
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="item in foodContent" class="warning">
                             <td>
-                                1
+                                {{$index+1}}
                             </td>
                             <td>
-                                TB - Monthly
+                                {{item.foodName}}
                             </td>
                             <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Default
+                                <button ng-click="foodDetail(item.foodId)">查看详情</button>
                             </td>
                         </tr>
-                        <tr class="success">
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Approved
-                            </td>
-                        </tr>
-                        <tr class="error">
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                02/04/2012
-                            </td>
-                            <td>
-                                Declined
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>
-                                3
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                03/04/2012
-                            </td>
-                            <td>
-                                Pending
-                            </td>
-                        </tr>
-                        <tr class="info">
-                            <td>
-                                4
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                04/04/2012
-                            </td>
-                            <td>
-                                Call in to confirm
-                            </td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
-                <div class="span4">
+                <div class="col-md-4">
                     <h3>
-                        营养元素
+                        已找到营养元素:{{nutritionContent.length}}个
                     </h3>
                     <table class="table">
                         <thead>
                         <tr>
                             <th>
-                                编号
+                                序号
                             </th>
                             <th>
-                                产品
+                                名称
                             </th>
                             <th>
-                                交付时间
-                            </th>
-                            <th>
-                                状态
+                                操作
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="item in nutritionContent" class="info">
                             <td>
-                                1
+                                {{$index+1}}
                             </td>
                             <td>
-                                TB - Monthly
+                                {{item.nutritionName}}
                             </td>
                             <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Default
-                            </td>
-                        </tr>
-                        <tr class="success">
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Approved
-                            </td>
-                        </tr>
-                        <tr class="error">
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                02/04/2012
-                            </td>
-                            <td>
-                                Declined
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td>
-                                3
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                03/04/2012
-                            </td>
-                            <td>
-                                Pending
-                            </td>
-                        </tr>
-                        <tr class="info">
-                            <td>
-                                4
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                04/04/2012
-                            </td>
-                            <td>
-                                Call in to confirm
+                                <button ng-click="foodDetail(item.nutritionId)">查看详情</button>
                             </td>
                         </tr>
                         </tbody>
@@ -358,5 +157,10 @@
         </div>
     </div>
 </div>
+
+<div style="visibility: hidden">
+    <input type="text" th:value="*{searchContent}" id="searchContent" />
+</div>
+
 </body>
 </html>

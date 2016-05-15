@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 #header{
-    background-image: url(/images/UI/personalcenterbackground.png);
+    background-image: url("./images/UI/personalcenterbackground.png");
     height: 224px;
     margin:0px;
     padding:0px;
@@ -13,7 +13,7 @@
     height: 18px;
     border: transparent;
     background-color: transparent;
-    background-image: url("/images/UI/icon-back.png");
+    background-image: url("./images/UI/icon-back.png");
 }
 #backHomePage{
     font-size: 16px;
@@ -26,7 +26,7 @@
     margin-top: 42px;
 }
 #headimage{
-    background-image: url("/images/UI/headimage.png");
+    background-image: url("./images/UI/headimage.png");
     height: 58px;
     width: 58px;
     border-radius:29px;
@@ -55,7 +55,7 @@
     margin-top: 126px;
 }
 #timeimage{
-    background-image: url(/images/UI/icon-calendar.png);
+    background-image: url("./images/UI/icon-calendar.png");
     height: 28px;
     width: 27px;
     border: transparent;

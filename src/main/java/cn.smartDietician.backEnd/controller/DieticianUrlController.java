@@ -33,12 +33,20 @@ public class DieticianUrlController {
     @RequestMapping("/signIn")
     public String signin(){ return "signIn";}
 
-
-
-    @RequestMapping(value = "/searchResult",method= RequestMethod.GET)
-    public String sitExamSingleAnswer(@RequestParam(value = "searchContent",
+    @RequestMapping(value = "/search",method= RequestMethod.POST)
+    public String search(@RequestParam(value = "searchContent",
             required=true) String content, Model model)
     {
+        System.out.println(content);
+        model.addAttribute("searchContent",content);
+        return "searchResult";
+    }
+
+    @RequestMapping(value = "/searchResult",method= RequestMethod.GET)
+    public String searchWeb(@RequestParam(value = "searchContent",
+            required=true) String content, Model model)
+    {
+        System.out.println(content);
         model.addAttribute("searchContent",content);
         return "searchResult";
     }

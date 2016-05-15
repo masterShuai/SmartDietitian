@@ -1,6 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="smartDietitian">
+<!DOCTYPE html >
+<html ng-app="smartDietitian" >
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -11,7 +10,7 @@
 
 
 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-<head>
+<head >
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -19,13 +18,12 @@
     <meta name="msapplication-tap-highlight" content="no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>无标题文档</title>
+    <title>{{tittle}}</title>
     <link href="/css/homePage1.css" rel="stylesheet" type="text/css"/>
     <script src="/lib/angularJS/angular.min.js"></script>
     <script src="/js/homePageController.js"></script>
-
 </head>
-<body  ng-controller="HomeController">
+<body ng-controller="HomeController">
 <script>
     function goBottom() {
         window.scrollTo(0, document.documentElement.scrollHeight - document.documentElement.clientHeight);
@@ -34,7 +32,7 @@
         window.open("signIn.html", "newwindow", "height=500,width=400,top=200;left=0,toolbar=no,menubar=no, scrollbars=no,resizable=no,location=no, status=no")
     }
 </script>
-<div id="sx" ng-init="loadPaper()">
+<div id="sx">
     <div class="container">
         <div id="header">
             <img src="/images/UI/logo.png" style="position:absolute;left:198px;top:27px;"/>
@@ -61,21 +59,17 @@
     <div class="article">
         <div align="center">
             <fieldset class="select">
-                <input type="button" value="菜品" id="菜品" ng-click="check(1)" style="border:0;background-color:transparent;color:#FFF;"/>
-                <input type="button" value="食材"  ng-click="check(2)" style="border:0;background-color:transparent;color:#FFF;"/>
-                <input type="button" value="营养元素" ng-click="check(3)" style="border:0;background-color:transparent;color:#FFF;"/>
+                <input type="button" value="菜品" id="菜品" style="border:0;background-color:transparent;color:#FFF;"/>
+                <input type="button" value="食材"  style="border:0;background-color:transparent;color:#FFF;"/>
+                <input type="button" value="营养元素" style="border:0;background-color:transparent;color:#FFF;"/>
             </fieldset>
         </div>
         <div>
             <fieldset class="search" style="position:absolute;margin-left:402px;">
-                <input type="text" class="box" name="s" id="s" class="inputText" ng-model="userInput" placeholder="搜索菜品、食材、营养元素" autocomplete="off"
-                       x-webkit-speech/>
-               <!-- <select style="width: 540px;height: auto"
-                        ng-model = "userSelect"
-                        class="form-control"
-                        ng-options = "a.cookingId as a.cookingName for a in list" >
-                </select >-->
-                <button class="btn" ng-click="toSearch()" id="btn" title="SEARCH"></button>
+                <!--<form name="form" ng-submit="search()" novalidate="novalidate" action="/search" method="post" >-->
+                    <input type="text"  ng-model="userSearch" class="box" name="searchContent" id="s" class="inputText" placeholder="搜索菜品、食材、营养元素" autocomplete="off" x-webkit-speech/>
+                    <button ng-click="search()" class="btn" id="btn"></button>
+                <!--</form>-->
             </fieldset>
         </div>
         <div style="margin-top:200px;margin-left:650px;">

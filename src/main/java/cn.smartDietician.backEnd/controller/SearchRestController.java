@@ -112,8 +112,9 @@ public class SearchRestController {
     @RequestMapping(value = "/Food/byName", method = RequestMethod.POST)
     public ResponseContent getFoodByName(@RequestBody SalerFoodListReqDate paras) {
         //初始化部分信息
-        System.out.println("getFoodByNameForValitation-----------");
-        return ResponseContent.makeSuccessResponse(SerachService.getFoodByName(paras.getFoodName()));
+        String name = paras.getFoodName();
+        System.out.println("getFoodByNameForValitation-----------"+name);
+        return ResponseContent.makeSuccessResponse(SerachService.getFoodByName(name));
     }
 
     /**
