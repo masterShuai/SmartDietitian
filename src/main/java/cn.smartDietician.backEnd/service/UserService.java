@@ -104,8 +104,42 @@ public class UserService {
      */
     @Cacheable({"getUserById"})
     public SalerUserReqDate getUserById(String id) {
-        SalerUserReqDate user = new SalerUserReqDate();
-        return user;
+        SalerUserReqDate newUser = new SalerUserReqDate();
+        for(int i=0;i<userList.size();i++){
+            User user = new User();
+            user = userList.get(i);
+            if(user.getId().equals(id)){
+                newUser.setId(id);
+                newUser.setName(user.getName());
+                newUser.setPassword(user.getPassword());
+                //System.out.println("用户信息复制");
+                newUser.setBirthday((new SimpleDateFormat("yyyy-MM-dd")).format(user.getBirthday()));
+                // System.out.println("转换生日成功");
+                newUser.setWeight(user.getWeight());
+                newUser.setSex(user.getSex());
+                newUser.setPregnant(user.isPregnant());//是否怀孕
+                newUser.setGestation(user.getGestation());//孕期
+                newUser.setLactation(user.isLactation());//是否为乳母
+                newUser.setManualWork(user.getManualWork());//体力劳动程度
+            }
+        }
+
+        List<NutritionContent> nmin = new ArrayList<>();
+        User_Nutrition_Min unm = new User_Nutrition_Min();
+        NutritionContent nc = new NutritionContent();
+        for(int i=0;i<userNutritionMinList.size();i++){
+            unm = new User_Nutrition_Min();
+            unm = userNutritionMinList.get(i);
+            if(unm.getUionPK().getUserId().equals(id)){
+                nc = new NutritionContent();
+                nc.nutritionId = unm.getUionPK().getUserId();
+                nc.content = unm.getContent();
+                nmin.add(nc);
+            }
+        }
+        newUser.setNutritionMin(nmin);
+        newUser.setCookingContent(getTodayDiet(id).cookingContent);
+        return newUser;
     }
 
     /**
@@ -160,10 +194,9 @@ public class UserService {
                 userCookingRepository.delete(ucPK);
                 state = 2;
             }
-
             userCooking.setUionPK(ucPK);
             userCooking.setContent(cookingContent.content);
-            userCooking.setPeople(cookingContent.content);
+            userCooking.setPeople(cookingContent.numb);
             userCooking.setTime(new Date());
             userCookingRepository.save(userCooking);
             userCookingList.add(userCooking);
@@ -177,6 +210,22 @@ public class UserService {
         return result;
     }
 
+    public SalerUserCookingReqDate getAllDiet(String id){
+        SalerUserCookingReqDate salerUserCookingReqDate = new SalerUserCookingReqDate();
+        User_Cooking uc= new User_Cooking();
+        for(int i=0;i<userCookingList.size();i++)
+        {
+            uc = userCookingList.get(i);
+            if(uc.getUionPK().getUserId().equals(id)){
+                CookingContent cc = new CookingContent();
+                cc.cookingId = uc.getUionPK().getCookingId();
+                cc.content = uc.getContent();
+                cc.numb = uc.getPeople();
+                salerUserCookingReqDate.cookingContent.add(cc);
+            }
+        }
+        return salerUserCookingReqDate;
+    }
 
     /**
      * 用户注册
@@ -198,30 +247,32 @@ public class UserService {
             newUser.setId(user.getId());
             newUser.setName(user.getName());
             newUser.setPassword(user.getPassword());
-            System.out.println("用户信息复制");
+            //System.out.println("用户信息复制");
             newUser.setBirthday((new SimpleDateFormat("yyyy-MM-dd")).parse(user.getBirthday()));
-            System.out.println("转换生日成功");
+           // System.out.println("转换生日成功");
             newUser.setWeight(user.getWeight());
             newUser.setSex(user.getSex());
             newUser.setPregnant(user.isPregnant());//是否怀孕
             newUser.setGestation(user.getGestation());//孕期
             newUser.setLactation(user.isLactation());//是否为乳母
             newUser.setManualWork(user.getManualWork());//体力劳动程度
-            //save
-            userRepository.save(newUser);
-            System.out.println("用户写入成功");
 
+            //save
             userList.add(newUser);
-            System.out.println("用户存入内存");
+            // System.out.println("用户存入内存");
+            userRepository.save(newUser);
+           // System.out.println("用户写入成功");
+
+
             state = 1;
             unml = getMinNutrition(newUser);
-            System.out.println("获取推荐营养摄入量");
+            //System.out.println("获取推荐营养摄入量");
             for (int i=0;i<unml.size();i++){
-                System.out.println(unml.get(i).getContent());
-                System.out.println(unml.get(i).getUionPK().getNutritionId());
-                System.out.println(unml.get(i).getUionPK().getUserId());
+                //System.out.println(unml.get(i).getContent());
+                //System.out.println(unml.get(i).getUionPK().getNutritionId());
+                //System.out.println(unml.get(i).getUionPK().getUserId());
                 userNutritionMinRepository.save(unml.get(i));
-                System.out.println("==================写入推荐摄入 第"+i+"个==========================");
+                //System.out.println("==================写入推荐摄入 第"+i+"个==========================");
             }
 
             userNutritionMinList.addAll(unml);

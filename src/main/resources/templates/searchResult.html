@@ -8,71 +8,99 @@
     <script type="text/javascript" src="/lib/Bookstrap/dist/js/bootstrap.min.js"></script>
     <script src="./lib/angularJS/angular.min.js"></script>
     <script src="./js/homePageController.js"></script>
-    <title></title>
+    <title>查询结果页面</title>
+    <style>
+        @font-face {
+            font-family: 'Glyphicons Halflings';
+        }
+        .navbar-default {
+            background-color:orange;
+            border-color: #e7e7e7;
+        }
+        .navbar-nav{
+            font-size: larger;
+            color: #ffffff;
+        }
+        .navbar-brand{
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body ng-app="smartDietitian" ng-controller="HomeController" ng-init="search()">
-<div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color: #ffffff" href="#">智能营养师</a>
+        </div>
 
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" style="color: #ffffff">返回首页</a></li>
+                <li><a href="#" onClick="javascript :history.back(-1);"  style="color: #ffffff">返回上一页</a></li>
+                <li><a href="{{navPage}}" style="color: #ffffff">{{navigation()}}</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="userSearch" placeholder="Search">
+                </div>
+                <button type="submit"  class="btn btn-default" ng-click="goSearching()" style="color:orange ">搜索</button>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div style="height: 65px">
+</div>
+<div class="container" style="background-color: #f0ad4e">
     <div class="row-fluid">
         <div class="span12">
-            <div class="page-header">
-                <button class="btn" type="button" ng-click="goHome()">返回主页</button>
-                <h1 style="text-align:center;">
-                    智能营养师
-                    <small>查询结果页面</small>
-                </h1>
-            </div>
             <ul class="thumbnails">
-                <li class="col-md-4">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </ul>
+            <div class="row-fluid">
+                <div class="col-md-4" align="center">
                     <div class="thumbnail">
+                        <img alt="300x200" src="./images/searchResult/food.png"/>
                         <div class="caption">
-                            <h3>
+                            <h3 align="center" style="color: orange">
                                 菜品
                             </h3>
                         </div>
                     </div>
-                </li>
-                <li class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>
-                                食材
-                            </h3>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-md-4">
-                    <div class="thumbnail">
-                        <!--<img alt="300x200" src="img/sports.jpg"/>-->
-                        <div class="caption">
-                            <h3>
-                                营养元素
-                            </h3>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <div class="row-fluid">
-                <div class="col-md-4">
                     <h3>
-                        已找到菜品:{{cookingContent.length}}个
+                        已找到菜品:{{cookingList.length}}个
                     </h3>
-                    <table class="table">
+                    <table class="table" style="background-color: #ffffff">
                         <thead>
                         <tr>
-                            <th>
+                            <th text-align="center">
                                序号
                             </th>
-                            <th>
+                            <th text-align="center">
                                 名称
                             </th>
-                           <th>
+                           <th text-align="center">
                                操作
                            </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="item in cookingContent" class="success">
+                        <tr ng-repeat="item in cookingList" class="warning">
                             <td>
                                 {{$index+1}}
                             </td>
@@ -80,32 +108,40 @@
                                 {{item.cookingName}}
                             </td>
                             <td>
-                                <button ng-click="cookingDetail(item.cookingId)">查看详情</button>
+                                <button ng-click="cookingDetail(item.cookingId)" style="color: #ffffff;background-color: darkorange;border: none">查看详情</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" align="center">
+                    <div class="thumbnail">
+                        <img alt="300x200" src="./images/searchResult/foodcontent.png"/>
+                        <div class="caption">
+                            <h3 align="center" style="color: orange">
+                                食材
+                            </h3>
+                        </div>
+                    </div>
                     <h3>
-                        已找到食材:{{foodContent.length}}个
+                        已找到食材:{{foodList.length}}个
                     </h3>
-                    <table class="table">
+                    <table class="table" align="center" style="background-color: #ffffff">
                         <thead>
                         <tr>
-                            <th>
+                            <th text-align="center">
                                 序号
                             </th>
-                            <th>
+                            <th text-align="center">
                                 名称
                             </th>
-                            <th>
+                            <th text-align="center">
                                 操作
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="item in foodContent" class="warning">
+                        <tr ng-repeat="item in foodList" class="warning">
                             <td>
                                 {{$index+1}}
                             </td>
@@ -113,41 +149,56 @@
                                 {{item.foodName}}
                             </td>
                             <td>
-                                <button ng-click="foodDetail(item.foodId)">查看详情</button>
+                                <form action="foodDetail" method="post">
+                                    <input type="text" name="foodId"  value=" {{item.foodId}}"   style="visibility: hidden;width: 0px"/>
+                                    <button type="submit" style="color: #ffffff;background-color: darkorange;border: none">查看详情</button>
+                                </form>
                             </td>
                         </tr>
 
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" align="center" >
+                    <div class="thumbnail">
+                        <img alt="300x200" src="images/searchResult/nuritions.png"/>
+                        <div class="caption">
+                            <h3 align="center" style="color: orange">
+                                营养元素
+                            </h3>
+                        </div>
+                    </div>
                     <h3>
-                        已找到营养元素:{{nutritionContent.length}}个
+                        已找到营养元素:{{nutritionList.length}}个
                     </h3>
-                    <table class="table">
+                    <table class="table" style="background-color: #ffffff">
                         <thead>
                         <tr>
-                            <th>
+                            <th text-align="center">
                                 序号
                             </th>
-                            <th>
+                            <th text-align="center">
                                 名称
                             </th>
-                            <th>
+                            <th text-align="center">
                                 操作
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="item in nutritionContent" class="info">
+                        <tr ng-repeat="item in nutritionList" class="warning">
                             <td>
                                 {{$index+1}}
                             </td>
                             <td>
                                 {{item.nutritionName}}
                             </td>
+
                             <td>
-                                <button ng-click="foodDetail(item.nutritionId)">查看详情</button>
+                                <form action="nutritionDetail" method="post">
+                                    <input type="text" name="nutritionId"  value=" {{item.nutritionId}}"   style="visibility: hidden;width: 0px"/>
+                                    <button type="submit" style="color: #ffffff;background-color: darkorange;border: none">查看详情</button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>

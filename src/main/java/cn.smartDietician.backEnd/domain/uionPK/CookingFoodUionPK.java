@@ -15,12 +15,8 @@ public class CookingFoodUionPK implements Serializable {
     @Column
     private long cookingId;
 
-    public CookingFoodUionPK(long foodId, long cookingId) {
-        this.foodId = foodId;
-        this.cookingId = cookingId;
-    }
 
-    public CookingFoodUionPK(){}
+    public CookingFoodUionPK(){super();}
 
     public long getFoodId() {
         return foodId;
@@ -54,4 +50,8 @@ public class CookingFoodUionPK implements Serializable {
         return super.hashCode();
     }
 
+    public CookingFoodUionPK(long foodId, long cookingId) {
+        this.foodId = foodId;
+        this.cookingId = cookingId;
+    }
 }

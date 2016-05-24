@@ -50,4 +50,27 @@ public class DieticianUrlController {
         model.addAttribute("searchContent",content);
         return "searchResult";
     }
+
+    @RequestMapping(value = "/nutritionDetail",method= RequestMethod.POST)
+    public String searchNutrition(@RequestParam(value = "nutritionId",
+            required=true) String content, Model model)
+    {
+        System.out.println(content);
+        model.addAttribute("nutritionId",content);
+        return "nutritionDetail";
+    }
+
+    @RequestMapping(value = "/foodDetail",method= RequestMethod.POST)
+    public String searchFood(@RequestParam(value = "foodId",
+            required=true) String content, Model model)
+    {
+        System.out.println(content);
+        model.addAttribute("foodId",content);
+        return "foodDetail";
+    }
+
+    @RequestMapping("/marster/test")
+    public String test() {
+        return "test";
+    }
 }

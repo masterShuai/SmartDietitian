@@ -23,7 +23,7 @@
     <script src="/lib/angularJS/angular.min.js"></script>
     <script src="/js/homePageController.js"></script>
 </head>
-<body ng-controller="HomeController">
+<body ng-controller="HomeController" ng-init="isUserLogin()">
 <script>
     function goBottom() {
         window.scrollTo(0, document.documentElement.scrollHeight - document.documentElement.clientHeight);
@@ -49,8 +49,8 @@
                     <li class="daohang"><input type="button" value="帮助"
                                style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;">
                     </li>
-                    <li class="daohang"><input type="button" value="登录" onclick="openwin()"
-                               style="border:0;font-size:16px;background-color:#F93;color:#FFF;width:70px;height:32PX;">
+                    <li class="daohang"><a href="{{navPage}}"><input type="button" value="{{navigation()}}"
+                               style="border:0;font-size:16px;background-color:#F93;color:#FFF;width:70px;height:32PX;"></a>
                     </li>
                 </ul>
             </nav>
@@ -68,7 +68,7 @@
             <fieldset class="search" style="position:absolute;margin-left:402px;">
                 <!--<form name="form" ng-submit="search()" novalidate="novalidate" action="/search" method="post" >-->
                     <input type="text"  ng-model="userSearch" class="box" name="searchContent" id="s" class="inputText" placeholder="搜索菜品、食材、营养元素" autocomplete="off" x-webkit-speech/>
-                    <button ng-click="search()" class="btn" id="btn"></button>
+                    <button ng-click="goSearching()" class="btn" id="btn"></button>
                 <!--</form>-->
             </fieldset>
         </div>

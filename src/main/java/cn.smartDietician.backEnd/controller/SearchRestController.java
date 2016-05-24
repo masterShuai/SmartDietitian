@@ -1,6 +1,7 @@
 package cn.smartDietician.backEnd.controller;
 
 
+import cn.smartDietician.backEnd.domain.entity.Nutrition;
 import cn.smartDietician.backEnd.domain.entity.NutritionContent;
 import cn.smartDietician.backEnd.protocol.*;
 import cn.smartDietician.backEnd.service.SerachService;
@@ -55,7 +56,32 @@ public class SearchRestController {
     public ResponseContent getNutritionByID(@RequestBody SalerNutritionListReqData paras) {
         //初始化部分信息
         System.out.println("getNutritionByIdValitation-----------");
-        return ResponseContent.makeSuccessResponse(SerachService.getNutritionById(paras.getNutritionId()));
+        Nutrition n = SerachService.getNutritionById(paras.getNutritionId());
+        if(n!=null){
+            return ResponseContent.makeSuccessResponse(n);
+        }
+        else{
+            return ResponseContent.makeFailResponse();
+        }
+    }
+
+    /**
+     * 获取富含该营养元素的前十种食材
+     * @param paras
+     * @return
+     */
+    @RequestMapping(value = "/Nutrition/getTopTen", method = RequestMethod.POST)
+    public ResponseContent getNutritionContent(@RequestBody SalerNutritionListReqData paras) {
+        //初始化部分信息
+        System.out.println("getTopTenFoodValitation-----------");
+        List<NutritionContent> ncl = SerachService.getTenFood(paras);
+        System.out.println(ncl.size());
+        if (ncl.size()>0){
+            return ResponseContent.makeSuccessResponse(ncl);
+        }
+        else{
+            return ResponseContent.makeFailResponse();
+        }
     }
 
     /**
@@ -99,7 +125,11 @@ public class SearchRestController {
     public ResponseContent getFoodByID(@RequestBody SalerFoodListReqDate paras) {
         //初始化部分信息
         System.out.println("getFoodNutritionByIdValitation-----------");
-        return ResponseContent.makeSuccessResponse(SerachService.getFoodById(paras.getFoodId()));
+        SalerFoodReqDate food=SerachService.getFoodById(paras.getFoodId());
+        if (!food.equals(new SalerFoodReqDate()))
+            return ResponseContent.makeSuccessResponse(food);
+        else
+            return ResponseContent.makeFailResponse();
     }
 
     /**

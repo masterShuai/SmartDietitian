@@ -36,7 +36,7 @@ public class UserRestController {
                                  HttpSession session) {
         if (userService.doLogin(idPassword)) {
             session.setAttribute("User",idPassword.getID());
-            return ResponseContent.makeSuccessResponse("success!");
+            return ResponseContent.makeSuccessResponse("success");
         } else {
             return ResponseContent.makeFailResponse("登录失败!");
         }
@@ -54,11 +54,22 @@ public class UserRestController {
         }
     }
 
+    @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
+    public ResponseContent isLogin( HttpServletRequest request, HttpSession session) {
+
+        if (session.getAttribute("User")!=null) {
+            return ResponseContent.makeSuccessResponse("success");
+        }else{
+            //System.out.println("未登录异常");
+            return ResponseContent.makeFailResponse();
+        }
+    }
+
     @RequestMapping(value = "/getTodayCooking", method = RequestMethod.POST)
     public ResponseContent getTodayCooking(HttpServletRequest request,
                                            HttpSession session) {
-        String userId;
-        if (session.getAttribute("User") != null) {
+        String userId = session.getAttribute("User").toString();
+        if (userId != null && userId!="") {
             userId = session.getAttribute("User").toString();
             return ResponseContent.makeSuccessResponse(userService.getTodayDiet(userId));
         } else

@@ -1,204 +1,151 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>无标题文档</title>
-<link href="/css/fooddetail.css" rel="stylesheet" type="text/css">
-<link href="/lib/Bookstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/lib/Bookstrap/dist/js/jquery-1.12.3.min.js"></script>
-<script type="text/javascript" src="/lib/Bookstrap/dist/js/bootstrap.min.js"></script>
-</head>
+<!DOCTYPE html>
+<html xmlns:th="">
+<head lang="zh">
+    <meta charset="UTF-8">
 
-<body>
-<div id="header">
-  <div id="header1">
-    <div id="header11">
-      <input name="foodimage" type="image" width="300" height="200" />
+    <link href="/lib/Bookstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./lib/angularJS/angular.min.js"></script>
+    <script src="./js/homePageController.js"></script>
+
+    <!--
+        <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    -->
+    <style>
+        @font-face {
+            font-family: 'Glyphicons Halflings';
+        }
+
+        .navbar-default {
+            background-color: orange;
+            border-color: #e7e7e7;
+        }
+
+        .navbar-nav {
+            font-size: larger;
+            color: #ffffff;
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+        }
+    </style>
+    <title>食材详细</title>
+</head>
+<body ng-app="smartDietitian" ng-controller="HomeController" ng-init="foodDetail()">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color: #ffffff" href="#">智能营养师</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" style="color: #ffffff">返回首页</a></li>
+                <li><a href="#" onClick="javascript :history.back(-1);" style="color: #ffffff">返回上一页</a></li>
+                <li><a href="{{navPage}}" style="color: #ffffff">{{navigation()}}</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="userSearch" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="goSearching()" style="color:orange ">搜索</button>
+            </form>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
-  </div>
-  <div id="header2">
-    <div id="header22">
-      <div id="id1">
-        <p>菜品编号:
-          <input name="菜品编号" id="id" type="text"/>
-        </p>
-      </div>
-      <div id="cookingname1">
-        <p align="left" >菜名:
-          <input name="菜名" id="name" type="text" />
-        </p>
-      </div>
-      <div id="nickname1">
-        <p>别名:
-          <input name="别名" id="othername" type="text"/>
-        </p>
-      </div>
-      <div id="flavor1" >
-        <p>口味:
-          <input name="口味" id="taste" type="text"  />
-        </p>
-      </div>
-      <div id="category1">
-        <p>类别:
-          <input name="类别" id="kind" type="text"  />
-        </p>
-      </div>
-      <div id="cuisine1">
-        <p>菜系:
-          <input name="菜系" id="style" type="text"  />
-        </p>
-      </div>
-      <div id="introduction1">
-        <p>简介:
-          <input name="简介" id="feature"type="text"  />
-        </p>
-      </div>
-    </div>
-  </div>
+    <!-- /.container-fluid -->
+</nav>
+<div style="height: 65px">
 </div>
-<div id="footer">
-  <div id="footer1" style="margin-left:100px;margin-top:100px;">
-    <div class="tabbable" id="tabs-435015">
-      <ul class="nav nav-tabs">
-        <li class="active"><a contenteditable="true" data-toggle="tab" href="#panel-1">做法</a></li>
-        <li><a contenteditable="true" data-toggle="tab" href="#panel-2">食材信息</a></li>
-        <li><a contenteditable="true" data-toggle="tab" href="#panel-3">营养含量</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" contenteditable="true" id="panel-1">
-          <textarea name="howToCook" cols="100" rows="10"></textarea>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-md-2">
         </div>
-        <div class="tab-pane" contenteditable="true" id="panel-2">
-          <div id="panel-2-1">
-            <table class="table table-hover" contenteditable="true">
-              <thead>
+        <div class="col-md-8">
+            <h3>
+                详情页面
+            </h3>
+            <div class="col-md-8">
+                <dl class="dl-horizontal">
+                    <p><span class="badge" contenteditable="true" style="background-color:orange">
+                        食材信息
+                    </span></p>
+                    <dt>食材名称:</dt>
+                    <dd>{{theFood.name}}</dd>
+                    <dt>产地:</dt>
+                    <dd>{{theFood.city}}</dd>
+                    <dt>食材别名:</dt>
+                    <dd>{{theFood.other_name}}</dd>
+                    <dt>类型:</dt>
+                    <dd>{{theFood.kind}}</dd>
+                    <dt>营养价值:</dt>
+                    <dd>{{theFood.foo_value}}</dd>
+                    <dt>忌食:</dt>
+                    <dd>{{theFood.diet}}</dd>
+                    <dt>可否生食:</dt>
+                    <dd>{{theFood.can_eat}}</dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <div class="row-fluid">
+                    <p><span class="badge" contenteditable="true" style="background-color:orange">营养元素含量</span></p>
+                    <ul ng-repeat="item in theFood.nutritionContent">
+                        <li>{{item.nutritionName}}:{{item.content}}{{item.nutritionUnit}}</li>
+                    </ul>
+            </div>
+            <hr/>
+            <h4>每菜品中中该食材用量TOP10</h4>
+            <table class="table table-bordered table-hover">
+                <thead>
                 <tr>
-                  <th>食材名称</th>
-                  <th>食材用量</th>
+                    <th>
+                        排名
+                    </th>
+                    <th>
+                        食材名称
+                    </th>
+                    <th>
+                        每百克含量
+                    </th>
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>植物油</td>
-                  <td>5g</td>
+                </thead>
+                <tbody>
+                <tr class="warning" ng-repeat="item in nutritionContentList">
+                    <td>
+                        {{$index+1}}
+                    </td>
+                    <td>
+                        {{item.nutritionName}}
+                    </td>
+                    <td>
+                        {{item.content}}{{theNutrition.unit}}
+                    </td>
                 </tr>
-              </tbody>
+
+                </tbody>
             </table>
-          </div>
         </div>
-        <div class="tab-pane" contenteditable="true" id="panel-3">
-          <div id="panel-3-1">
-            <table class="table table-bordered table-hover table-condensed" contenteditable="true">
-              <thead>
-                <tr>
-                  <th>营养元素</th>
-                  <th>含量（百分比）</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>1</td>
-                </tr>
-                <tr class="2">
-                  <td>2</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="3">
-                  <td>3</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="4">
-                  <td>4</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="5">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="6">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="7">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="8">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="9">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="10">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="11">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="12">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="13">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="14">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="15">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="16">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="17">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="18">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="19">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="20">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="21">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="22">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="23">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-                <tr class="24">
-                  <td>5</td>
-                  <td>TB - Monthly</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="col-md-2">
         </div>
-      </div>
     </div>
-  </div>
 </div>
+
+<div style="visibility: hidden">
+    <input type="text" th:value="*{foodId}" id="foodId"/>
+</div>
+
 </body>
 </html>

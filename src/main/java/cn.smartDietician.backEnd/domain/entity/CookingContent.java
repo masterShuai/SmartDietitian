@@ -11,5 +11,7 @@ public class CookingContent {
 
     public int numb;//食用人数
 
+    public String cookingName;//食用人数
+
 
 }

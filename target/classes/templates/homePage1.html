@@ -23,7 +23,7 @@
     <script src="/lib/angularJS/angular.min.js"></script>
     <script src="/js/homePageController.js"></script>
 </head>
-<body ng-controller="HomeController">
+<body ng-controller="HomeController" ng-init="isUserLogin()">
 <script>
     function goBottom() {
         window.scrollTo(0, document.documentElement.scrollHeight - document.documentElement.clientHeight);
@@ -49,8 +49,8 @@
                     <li class="daohang"><input type="button" value="帮助"
                                style="border:0;font-size:16px;background-color:transparent;color:#FFF;width:70px;height:32PX;">
                     </li>
-                    <li class="daohang"><input type="button" value="登录"
-                               style="border:0;font-size:16px;background-color:#F93;color:#FFF;width:70px;height:32PX;">
+                    <li class="daohang"><a href="{{navPage}}"><input type="button" value="{{navigation()}}"
+                               style="border:0;font-size:16px;background-color:#F93;color:#FFF;width:70px;height:32PX;"></a>
                     </li>
                 </ul>
             </nav>

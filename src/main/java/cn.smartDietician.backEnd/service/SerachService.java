@@ -6,6 +6,7 @@ import cn.smartDietician.backEnd.domain.uionPK.CookingFoodUionPK;
 import cn.smartDietician.backEnd.domain.uionPK.CookingNutritionUionPK;
 import cn.smartDietician.backEnd.protocol.*;
 import cn.smartDietician.backEnd.utils.CollectionHelper;
+import cn.smartDietician.backEnd.utils.SortFoodByNutrition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -178,7 +180,7 @@ public class SerachService {
     @Cacheable({"getFoodById"})
     public SalerFoodReqDate getFoodById(long foodId) {
         SalerFoodReqDate sf = new SalerFoodReqDate();
-        Food f;
+        Food f = new Food();
         for (int i=0;i<foodList.size();i++){
             f = foodList.get(i);
             if (f.getId()==foodId){
@@ -332,14 +334,14 @@ public class SerachService {
                 cookingFoodList.add(cf);
                 List<NutritionContent> nutritionContents = getContentByFoodId(foodContents.get(i).foodId);
                 for(int j=0;j<nutritionContents.size();j++){
-                    System.out.println("3."+i+"."+j);
+                    //System.out.println("3."+i+"."+j);
                     if(cookingNutritions.get(nutritionContents.get(j).nutritionId) != null) {
-                        System.out.println("3."+i+"."+j+"true");
+                        //System.out.println("3."+i+"."+j+"true");
                         cookingNutritions.put(nutritionContents.get(j).nutritionId
                                 , nutritionContents.get(j).content/100*foodContents.get(i).content+
                                 cookingNutritions.get(nutritionContents.get(j).nutritionId));
                     }else{
-                        System.out.println("3."+i+"."+"false");
+                        //System.out.println("3."+i+"."+"false");
                         cookingNutritions.put(nutritionContents.get(j).nutritionId
                                 , nutritionContents.get(j).content/100*foodContents.get(i).content);
                     }
@@ -571,5 +573,43 @@ public class SerachService {
             }
         }
         return fcl;
+    }
+
+    /**
+     * 获取富含该营养元素含量前十名的食材
+     * @param paras
+     * @return
+     */
+    public List<NutritionContent> getTenFood(SalerNutritionListReqData paras) {
+        List<NutritionContent> ncl = new ArrayList<>();
+        List<Food_Nutrition> fnl = new ArrayList<>();
+        try{
+            //找出食材_营养含量表中所有该营养元素含量
+            for(int i=0;i<foodNutritionList.size();i++){
+                if(foodNutritionList.get(i).getUionPK().getNutritionId().equals(paras.getNutritionId())){
+                    fnl.add(foodNutritionList.get(i));
+                }
+
+            }
+
+            //根据食材含量排序
+            Collections.sort(fnl, new SortFoodByNutrition());
+
+            //选出前十名
+            for(int i =0;i<10&&i<fnl.size();i++){
+                NutritionContent nc = new NutritionContent();
+                nc.nutritionId = paras.getNutritionId();
+                nc.nutritionName = getFoodById(fnl.get(i).getUionPK().getFoodId()).getName();
+                nc.content = fnl.get(i).getContent();
+                ncl.add(nc);
+                System.out.println(nc.nutritionName);
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+        return ncl;
     }
 }
