@@ -1,4 +1,5 @@
-# znyys
+# SmartDietitian
+
 Wang Shuai's application
 
 this is my new idea about making smart diet plan for every day
