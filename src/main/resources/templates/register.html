@@ -1,92 +1,163 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<link href="./css/personalcenter.css" rel="stylesheet" type="text/css" />
-<link href="./css/register.css" rel="stylesheet" type="text/css" />
+!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/css/register.css">
+    <link href="/lib/Bookstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/97DatePick/WdatePicker.js"></script>
+    <script src="./lib/angularJS/angular.min.js"></script>
+    <script src="./js/homePageController.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Glyphicons Halflings';
+        }
+
+        .navbar-default {
+            background-color: orange;
+            border-color: #e7e7e7;
+        }
+
+        .navbar-nav {
+            font-size: larger;
+            color: #ffffff;
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+        }
+    </style>
 </head>
+<body ng-app="smartDietitian" ng-controller="HomeController" ng-init="isUserLogin()">
 
-<body>
-<div style="margin-left:50px;">
-<div style="border-bottom:#CCC 1px solid;width:280px;">
-  <p>用户名:
-    <input name="id" id="id"  style="border:0px;width:200px;" type="text"/>
-  </p>
-</div>
-<div style="border-bottom:#FC0 1px solid;width:280px;">
-  <p>输入密码:
-    <input name="password" id="password"style="border:0px;width:200px;" type="text"/>
-  </p>
-</div>
-<div style="border-bottom:#CCC 1px solid;width:280px;">
-  <p>昵称:
-    <input name="name" id="name"style="border:0px;width:200px;" type="text"/>
-  </p>
-</div>
-<div style="border-bottom:#FC0 1px solid;width:280px;">
-  <p>出生日期:
-    <input name="出生日期" id="birthday" style="border:0px;width:150px;" type="date"/>
-  </p>
-</div>
-<div style="border-bottom:#CCC 1px solid;width:280px;">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-default">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color: #ffffff" href="/">智能营养师</a>
+        </div>
 
-<div style="float:left;width:60px;">
-<p>性别:
-<form action=""style="width:50px;margin-left:100px;">
-<select id="sex" name="cars">
-  <option value="volvo">男</option>
-  <option value="fiat" selected>女</option>
-</select>
-</form>
-</div>
-<div style="float:left;width:50px;">
-<form action=""style="width:60px;">
-<select name="car" id="pregnant">
-  <option value="fiat" selected>乳母</option>
-  <option value="volvo">孕妇</option>
-  <option value="volvo">女性	</option>
-  
-</select>
-</form>
-</div>
-<div style="float:right;width:50px;">
-<form action=""style="width:60px;">
-<select name="ca" id="loctation">
- <option value="fiat" selected>早</option>
-  <option value="volvo">中</option>
-  <option value="volvo">晚</option>
-</select>
-</form>
-</p>
-</div>
-</div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/" style="color: #ffffff">返回首页</a></li>
+                <li><a href="#" onClick="javascript :history.back(-1);" style="color: #ffffff">返回上一页</a></li>
+                <li><a href="{{navPage}}" style="color: #ffffff">{{navigation()}}</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="userSearch" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="goSearching()" style="color:orange ">搜索
+                </button>
+            </form>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div class="container">
+        <div style="width:100%">
+            <p style="font-size: 30px;color: #ffffff;margin-left: 42%;margin-top:5%;font-weight: bolder">智能营养师</p>
+        </div>
+        <div id="left1" style="float: left;width:50%;border-right: groove;border-right-color: #ffffff;">
+            <div class="input-group input-group-lg" style="margin-top: 10%;margin-left: 20%">
+                <span class="input-group-addon" id="id"
+                      style="background-color: darkorange;color: #ffffff;font-weight: bold;width: 10%">用户名</span>
+                <input type="text" class="form-control" placeholder="id" aria-describedby="sizing-addon1"
+                       style="width: 55%;" ng-model="user.id">
+            </div>
+            <div class="input-group input-group-lg" style="margin-top: 5%;margin-left: 20%">
+                <span class="input-group-addon" id="password"
+                      style="background-color: darkorange;color: #ffffff;font-weight: bold">密     码</span>
+                <input type="password" class="form-control" placeholder="password" aria-describedby="sizing-addon1"
+                       style="width: 57%" ng-model="user.password">
+            </div>
 
-<div style="border-bottom:#FC0 1px solid;width:280px;">
-  <p>体重:
-    <input name="体重" id="weight"  style="border:0px;width:200px;" type="text"/>
-  </p>
-</div>
-<div style="border-bottom:#CCC 1px solid;width:280px;">
-  <p align="left" >体力活动程度:
-    <form action=""style="width:60px;">
-<select name="c" id="manualWork">
-  <option value="fiat" selected>轻</option>
-  <option value="volvo">中</option>
-  <option value="volvo">重</option>
-  
-</select>
-</form>
-  </p>
-</div>
-</div>
-<div id="footer">
-  <div id="left" style="float:left;margin-top:40px;width:50%;"><a href="signIn.html">
-    <input name="back" type="button" value="返回" style="background-color:#FFF;color:#FC0;font-size:16px;width:110px;height:60px;border:0px;margin-left:40px;"/>
-    </a></div>
-  <div id="right" style="float:right;margin-top:40px;width:50%;"><a href="homePage1.html">
-    <input name="register" type="button" value="注册" style="background-color:#FC0;color:#CCC;font-size:16px;width:110px;height:60px;border:0px;margin-left:40px;"/>
-    </a></div>
+            <div class="input-group input-group-lg" style="margin-top: 5%;margin-left: 20%">
+                <span class="input-group-addon" id="name"
+                      style="background-color: darkorange;color: #ffffff;font-weight: bold">昵称</span>
+                <input type="text" class="form-control" placeholder="name" aria-describedby="sizing-addon1"
+                       style="width: 57%" ng-model="user.name">
+            </div>
+
+            <div class="input-group input-group-lg" style="margin-top: 5%;margin-left: 20%">
+                <span class="input-group-addon"
+                    style="background-color: darkorange;color: #ffffff;font-weight: bold">性别</span>
+
+                <div class="form-group" style="width: 80px;float: left">
+                    <select class="form-control" id="sex" ng-model="userSex" ng-options="x.string for x in sex">
+                        <!--<option>女性</option>
+                        <option>男性</option>-->
+                    </select>
+                </div>
+            </div>
+            <div class="input-group input-group-lg" style="margin-top: 5%;margin-left: 20%">
+                <span ng-show="userSex.value" class="input-group-addon"
+                      style="background-color: darkorange;color: #ffffff;font-weight: bold">生理状态</span>
+                <div ng-show="userSex.value" class="form-group" style="width: 100px;float: left">
+                    <select class="form-control" ng-model="userState" ng-options="x.string for x in WomanState">
+                        <!--<option id="pregnant">孕妇</option>
+                        <option id="lactation">乳母</option>-->
+                    </select>
+                </div>
+
+                <span ng-show="lactation(userState.value)" class="input-group-addon"
+                      style="background-color: darkorange;color: #ffffff;font-weight: bold">孕期</span>
+                <div ng-show="lactation()" class="form-group" style="width: 100px;float: left">
+                    <select class="form-control" id="gestation"
+                            ng-model="userGestation" ng-options="x.string for x in gestation">
+                        <!--<option>早期</option>
+                        <option>中期</option>
+                        <option>晚期</option>-->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="right1" style="float:left;width:50%;">
+            <div class="input-group input-group-lg" style="margin-top: 10%;margin-left: 20%">
+                <span class="input-group-addon" id="weight"
+                      style="background-color: darkorange;color: #ffffff;font-weight: bold">体重</span>
+                <input type="text" class="form-control" placeholder="weight" aria-describedby="sizing-addon1"
+                       style="width: 57%;" ng-model="user.weight">
+
+                <p style="color: #ffffff;font-weight: bold;font-size: x-large">kg</p>
+            </div>
+
+            <div class="input-group input-group-lg" style="margin-top:5%;margin-left: 20%">
+                <span class="input-group-addon"
+                      style="background-color: darkorange;color: #ffffff;font-weight: bold">出生日期</span>
+                <input type="text" ng-model="user.birthday" id="birthday" class="Wdate form-control" onfocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd'})"
+                       placeholder="birthday" aria-describedby="sizing-addon1" style="width: 57%"/>
+            </div>
+            <div class="input-group input-group-lg" style="margin-top: 5%;margin-left: 20%">
+                <span class="input-group-addon" id="manualWork"
+                      style="background-color:darkorange;color: #ffffff;font-weight: bold">体力劳动程度</span>
+                    <div class="form-group" style="width: 150px;float: left">
+                        <select class="form-control" ng-model="userWork" ng-options="x.string for x in manualWork">
+                           <!-- <option>轻度</option>
+                            <option>中度</option>
+                            <option>重度</option>-->
+                        </select>
+                    </div>
+            </div>
+        </div>
+        <div id="right">
+            <input type="button" ng-click="register()" class="btn btn-default" value="注册"
+                   style="margin-top:10%;width: 100px;color:#ffffff;
+                   background-color:darkorange;font-weight: bold;font-size: large">
+        </div>
+    <script src="http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.js"></script>
+    <link href='http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.css' rel='stylesheet' />
 </div>
 </body>
 </html>

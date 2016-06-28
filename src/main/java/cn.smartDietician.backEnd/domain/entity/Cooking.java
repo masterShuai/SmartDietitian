@@ -26,7 +26,7 @@ public class Cooking {
     private String style;//菜系
     @Column
     private String feature;//简介
-    @Column
+    @Column(columnDefinition="TEXT", nullable=true)
     private String howToCook;//详细做法
 
     @Column

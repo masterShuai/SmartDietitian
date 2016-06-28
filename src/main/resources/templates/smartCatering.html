@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智能配餐</title>
+    <link href="/lib/Bookstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/lib/Bookstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./lib/angularJS/angular.min.js"></script>
+    <script src="./js/homePageController.js"></script>
+
+    <!--
+        <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    -->
+    <style>
+        @font-face {
+            font-family: 'Glyphicons Halflings';
+        }
+
+        .navbar-default {
+            background-color: orange;
+            border-color: #e7e7e7;
+        }
+
+        .navbar-nav {
+            font-size: larger;
+            color: #ffffff;
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body ng-app="smartDietitian" ng-controller="HomeController" ng-init="smartInit()">
+<script src="http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.js"></script>
+<link href='http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.css' rel='stylesheet' />
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color: #ffffff" href="#">智能营养师</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/" style="color: #ffffff">返回首页</a></li>
+                <li><a href="#" onClick="javascript :history.back(-1);" style="color: #ffffff">返回上一页</a></li>
+                <li><a href="{{navPage}}" style="color: #ffffff">{{navigation()}}</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="userSearch" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="goSearching()" style="color:orange ">搜索</button>
+            </form>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div class="container">
+    <div id="header"style="background-color: orange;height: 25%"><p style="color:#ffffff;font-weight:bold;font-size:24px;margin-left: 16%">菜品</p></div>
+    <div id="top" style="background-color:orange;">
+        <div id="left" style="background-color:orange;min-height:600px;width: 35%;float: left;border-right-color: #ffffff;border-right: inset;">
+            <div style="padding: 19% 6% 6% 6%;min-height: 350px;">
+                <table class="table">
+
+                    <thead>
+                    <tr>
+                        <th style="color:#ffffff">菜品名称</th>
+                        <th style="color:#ffffff">菜品数量</th>
+                        <th style="color:#ffffff">食用人数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in todayCooking.cookingContent">
+                        <td>{{item.cookingName}}</td>
+                        <td>{{item.content}}</td>
+                        <td>{{item.numb}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="right" style="width: 65%;float: right;min-height: 600px;background-color: orange">
+            <div style="padding: 10% 6% 6% 6%;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="color:#ffffff">营养元素</th>
+                        <th style="color:#ffffff">今日总含量</th>
+                        <th style="color:#ffffff">推荐摄入量</th>
+                        <th style="color:#ffffff">营养元素百分比</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in nutritionContentList">
+                        <td>{{item.nutritionName}}</td>
+                        <td>{{item.content}}</td>
+                        <td>{{getUserNutrition(item.nutritionId)}}</td>
+                        <td>            <div class="progress" style="width: 80%;margin-left: 10%">
+                            <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{item.content/getUserNutrition(item.nutritionId)*100}}" aria-valuemin="0" aria-valuemax="100" style="{{'width:'+(item.content/getUserNutrition(item.nutritionId)*100)+'%'}}">
+                                <span class="sr-only">已满足{{item.content/getUserNutrition(item.nutritionId)*100}}%</span>
+                            </div>
+                        </div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr style="width: 87%">
+            <div class="progress" style="width: 60%;margin-left: 10%">
+                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    <span class="sr-only">40% Complete (success)</span>
+                    <caption style="color:#ffffff;">总营养含量</caption>
+                </div>
+            </div>
+            <div class="progress" style="width: 60%;margin-left: 10%">
+                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                    <span class="sr-only">50% Complete</span>
+                    <caption style="color:#ffffff;">推荐摄入量</caption>
+                </div>
+            </div>
+            <div class="progress" style="width: 60%;margin-left: 10%">
+                <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                    <span class="sr-only">80% Complete (danger)</span>
+                    <caption style="color:#ffffff;">当前营养含量/推荐摄入量    </caption>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom" style="background-color: moccasin;height: 300px;">
+        <div>
+            <button type="button" class="btn btn-warning" style="background-color:darkorange;font-weight: bold;width:200px;height:50px;margin-top:6%;margin-left:42%;color: #ffffff    ">智能配餐</button>
+        </div>
+            <div class="input-group" style="padding: 5% 35% 0 35%">
+            <span class="input-group-addon" style="background-color:orange;color: #ffffff;font-weight: bold">菜名:</span>
+                <label>哈哈哈</label>
+            </div>
+            <div style="margin-top: 2%">
+            <button type="button" class="btn btn-warning" style="background-color:darkorange;font-weight: bold;color: #ffffff;margin-left: 44%;">添加</button>
+            <button type="button" class="btn btn-warning" style="background-color:darkorange;font-weight: bold;color: #ffffff ">自由选择</button>
+            </div>
+    </div>
+</div>
+
+</body>
+</html>

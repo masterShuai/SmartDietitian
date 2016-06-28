@@ -6,6 +6,7 @@ import cn.smartDietician.backEnd.domain.uionPK.CookingFoodUionPK;
 import cn.smartDietician.backEnd.domain.uionPK.CookingNutritionUionPK;
 import cn.smartDietician.backEnd.protocol.*;
 import cn.smartDietician.backEnd.utils.CollectionHelper;
+import cn.smartDietician.backEnd.utils.SortCookingByFood;
 import cn.smartDietician.backEnd.utils.SortFoodByNutrition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -27,6 +28,7 @@ import java.util.List;
         "getNutritionById",
         "getAllFood",
         "getFoodById",
+        "getFoodByName",
         "getAllCooking",
         "getCookingById",
         "computeTodayNtrition",
@@ -180,8 +182,9 @@ public class SerachService {
     @Cacheable({"getFoodById"})
     public SalerFoodReqDate getFoodById(long foodId) {
         SalerFoodReqDate sf = new SalerFoodReqDate();
-        Food f = new Food();
-        for (int i=0;i<foodList.size();i++){
+        Food f;
+        int i=0;
+        for (;i<foodList.size();i++){
             f = foodList.get(i);
             if (f.getId()==foodId){
                 sf.setId(foodId);
@@ -197,14 +200,20 @@ public class SerachService {
                 break;
             }
         }
+        if (i==foodList.size()){
+            return null;
+        }
         return sf;
     }
+
+
 
     /**
      * 通过名称模糊查询食材名称列表
      * @param foodName
      * @return
      */
+    @Cacheable({"getFoodByName"})
     public List<SalerFoodListReqDate> getFoodByName(String foodName) {
         List<SalerFoodListReqDate> salerFoodList = new ArrayList<>();
         SalerFoodListReqDate fn = new SalerFoodListReqDate();
@@ -277,9 +286,10 @@ public class SerachService {
      */
     public List<SalerCookingListReqDate> getCookingByName(String cookingName) {
         List<SalerCookingListReqDate> salerCookingList = new ArrayList<>();
-        SalerCookingListReqDate cn = new SalerCookingListReqDate();
+        SalerCookingListReqDate cn;
         for(int i=0;i<cookingList.size();i++){
-            if(cookingList.get(i).getName().toLowerCase().contains(cookingName.trim().toLowerCase())) {
+            if(cookingList.get(i).getName().contains(cookingName.trim())) {
+                cn = new SalerCookingListReqDate();
                 cn.setCookingId(cookingList.get(i).getId());
                 cn.setCookingName(cookingList.get(i).getName());
                 salerCookingList.add(cn);
@@ -299,8 +309,8 @@ public class SerachService {
         Hashtable<String,Float> cookingNutritions = new Hashtable<>();
         try{
             //将菜品信息存入菜品表
-            cooking.setId((long) (cookingList.size()+1));
-            System.out.println("ID:" + cooking.getId());
+            cooking.setId(0L);
+
             cooking.setName(cookingReqDate.getName());
             cooking.setOtherName(cookingReqDate.getOtherName());
             cooking.setTaste(cookingReqDate.getTaste());
@@ -309,7 +319,8 @@ public class SerachService {
             cooking.setFeature(cookingReqDate.getFeature());
             cooking.setHowToCook(cookingReqDate.getHowToCook());
             cooking.setAuthorId(userId);
-            cookingRepository.save(cooking);
+            cooking = cookingRepository.save(cooking);
+            System.out.println("ID:" + cooking.getId()+"  "+cookingReqDate.getName());
             state = 1;
             //加入内存
             cookingList.add(cooking);
@@ -321,7 +332,7 @@ public class SerachService {
 
             //遍历前端请求数据中,菜品选用食材List
             List<FoodContent> foodContents = cookingReqDate.getFoodContent();
-            System.out.println("1");
+            //System.out.println("1");
             Cooking_Food cf=new Cooking_Food();
             for (int i=0;i<foodContents.size();i++){
                 cf.setUionPK(new CookingFoodUionPK(foodContents.get(i).foodId,cooking.getId()));
@@ -329,7 +340,7 @@ public class SerachService {
                 cookingFoods.add(cf);
                 //将菜品食材用量存入菜品-食材表
                 cookingFoodRepository.save(cf);
-                System.out.println("2."+i);
+                //System.out.println("2."+i);
                 //加入内存
                 cookingFoodList.add(cf);
                 List<NutritionContent> nutritionContents = getContentByFoodId(foodContents.get(i).foodId);
@@ -356,26 +367,26 @@ public class SerachService {
             for(Integer k = 1;k<nutritionCount;k++){
                 if(cookingNutritions.get(k.toString())!=null){
 
-                    System.out.println(k.toString()+":"+cookingNutritions.get(k.toString()));
+                    //System.out.println(k.toString()+":"+cookingNutritions.get(k.toString()));
 
                     cn.setUionPK(new CookingNutritionUionPK(cooking.getId(),k.toString()));
                     cn.setContent(cookingNutritions.get(k.toString()));
 
-                    System.out.println(cn.getUionPK().getNutritionId()+":"
-                            +cn.getUionPK().getCookingId()+":"+cn.getContent());
+                    //System.out.println(cn.getUionPK().getNutritionId()+":"
+                    //        +cn.getUionPK().getCookingId()+":"+cn.getContent());
 
                     cooking_Nutritions.add(cn);
-                    System.out.println("add ArrayList over");
+                    //System.out.println("add ArrayList over");
 
 
                     cookingNutritionHashTable.addNewItem(cn.getUionPK().getNutritionId(),
                             cn.getUionPK().getCookingId(),
                             cn.getContent());
-                    System.out.println("add HashTable over");
+                    //System.out.println("add HashTable over");
                     state =4;
                 }
                 cookingNutritionRepository.save(cn);
-                System.out.println("add DataBase over");
+                //System.out.println("add DataBase over");
             }
 
 
@@ -452,7 +463,7 @@ public class SerachService {
             for(int j=0;j<salerUserCookingReqDate.cookingContent.size();j++){
                 content=cookingNutritionHashTable.getContent(i.toString(),
                         salerUserCookingReqDate.cookingContent.get(j).cookingId);
-                if (content!=-1){
+                if (content!=-1&&content!=0){
                     nc.content+=content
                             *salerUserCookingReqDate.cookingContent.get(j).content
                             /salerUserCookingReqDate.cookingContent.get(j).numb;
@@ -464,6 +475,9 @@ public class SerachService {
     }
 
     @Cacheable({"smartDietician"})
+    /**
+     * 智能配餐
+     */
     public SalerCookingReqDate smartDietician(List<NutritionContent> nutritionContentList){
         int maxLevel = nutritionContentList.size();
         int result = 0; //智能匹配出的菜品编号
@@ -501,6 +515,75 @@ public class SerachService {
 
 
         return getCookingById(result);
+    }
+
+    /**
+     * 获取富含该营养元素含量前十名的食材
+     * @param paras
+     * @return
+     */
+    public List<FoodContent> getTenFood(SalerNutritionListReqData paras) {
+        List<FoodContent> ncl = new ArrayList<>();
+        List<Food_Nutrition> fnl = new ArrayList<>();
+        try{
+            //找出食材_营养含量表中所有该营养元素含量
+            for(int i=0;i<foodNutritionList.size();i++){
+                if(foodNutritionList.get(i).getUionPK().getNutritionId().equals(paras.getNutritionId())){
+                    fnl.add(foodNutritionList.get(i));
+                }
+
+            }
+            //根据食材含量排序
+            Collections.sort(fnl, new SortFoodByNutrition());
+
+            //选出前十名 变量类型选用错误
+            for(int i =0;i<10&&i<fnl.size();i++){
+                FoodContent nc = new FoodContent();
+                nc.foodId = fnl.get(i).getUionPK().getFoodId();
+                nc.foodName = getFoodNameById(fnl.get(i).getUionPK().getFoodId());
+                nc.content = fnl.get(i).getContent();
+                ncl.add(nc);
+                //System.out.println(nc.nutritionName);
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return ncl;
+    }
+
+    /**
+     * 获取选用该食材最多的前十名菜品
+     * @param paras
+     * @return
+     */
+    public List<FoodContent> getTenCooking(SalerFoodListReqDate paras) {
+        List<FoodContent> fcl = new ArrayList<>();
+        List<Cooking_Food> cfl = new ArrayList<>();
+        try{
+            //找出食材_营养含量表中所有该营养元素含量
+            for(int i=0;i<cookingFoodList.size();i++){
+                if(cookingFoodList.get(i).getUionPK().getFoodId()==paras.getFoodId()){
+                    cfl.add(cookingFoodList.get(i));
+                }
+            }
+            //根据食材含量排序
+            Collections.sort(cfl, new SortCookingByFood());
+
+            //选出前十名 变量类型选用错误
+            for(int i =0;i<10&&i<cfl.size();i++){
+                FoodContent fc = new FoodContent();
+                fc.foodId = cfl.get(i).getUionPK().getCookingId();
+                fc.content = cfl.get(i).getContent();
+                fc.foodName = getCookingNameById(cfl.get(i).getUionPK().getCookingId());
+                fcl.add(fc);
+                //System.out.println(nc.nutritionName);
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return fcl;
     }
 
 //######################### 内部调用函数 ############################################
@@ -561,13 +644,14 @@ public class SerachService {
     public List<FoodContent> getFoodByCookingId(long id){
         List<FoodContent> fcl = new ArrayList<>();
         FoodContent fc;
-        Cooking_Food cf = new Cooking_Food();
 
+        Cooking_Food cf;
         for(int i = 0;i< cookingFoodList.size();i++){
+            cf = new Cooking_Food();
             cf = cookingFoodList.get(i);
             if (cf.getUionPK().getCookingId()==id){
                 fc = new FoodContent(cf.getUionPK().getFoodId(),
-                        getFoodById(id).getName(),
+                        getFoodNameById(cf.getUionPK().getFoodId()),
                         cf.getContent());
                 fcl.add(fc);
             }
@@ -576,40 +660,29 @@ public class SerachService {
     }
 
     /**
-     * 获取富含该营养元素含量前十名的食材
-     * @param paras
-     * @return
+     * 内部调用 通过ID获取食材名称
      */
-    public List<NutritionContent> getTenFood(SalerNutritionListReqData paras) {
-        List<NutritionContent> ncl = new ArrayList<>();
-        List<Food_Nutrition> fnl = new ArrayList<>();
-        try{
-            //找出食材_营养含量表中所有该营养元素含量
-            for(int i=0;i<foodNutritionList.size();i++){
-                if(foodNutritionList.get(i).getUionPK().getNutritionId().equals(paras.getNutritionId())){
-                    fnl.add(foodNutritionList.get(i));
-                }
-
-            }
-
-            //根据食材含量排序
-            Collections.sort(fnl, new SortFoodByNutrition());
-
-            //选出前十名
-            for(int i =0;i<10&&i<fnl.size();i++){
-                NutritionContent nc = new NutritionContent();
-                nc.nutritionId = paras.getNutritionId();
-                nc.nutritionName = getFoodById(fnl.get(i).getUionPK().getFoodId()).getName();
-                nc.content = fnl.get(i).getContent();
-                ncl.add(nc);
-                System.out.println(nc.nutritionName);
+    public String getFoodNameById(long foodId) {
+        String fName = new String();
+        for (int i=0;i<foodList.size();i++){
+            if(foodList.get(i).getId()==foodId) {
+                fName = foodList.get(i).getName();
             }
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-
-        return ncl;
+        return fName;
     }
+
+    /**
+     * 内部调用 通过ID获取菜品名称
+     */
+    public String getCookingNameById(long cookingId) {
+        String cName = new String();
+        for (int i=0;i<cookingList.size();i++){
+            if(cookingList.get(i).getId()==cookingId) {
+                cName = cookingList.get(i).getName();
+            }
+        }
+        return cName;
+    }
+
 }

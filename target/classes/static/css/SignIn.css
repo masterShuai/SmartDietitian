@@ -1,0 +1,20 @@
+.container{
+    background-color: #f0ad4e;
+    margin-top: 10%;
+    width: 540px;
+    height: 400px;
+    box-shadow: 0 20px 20px #CCCCCC;
+    border-radius: 5%;
+}
+#myform{
+    align-content: center;
+    width:400px;
+    margin-left: 50px;
+    height: 350px;
+
+}
+body{
+    background-color: #f7e1b5;
+    font-family: Consolas;
+}
+

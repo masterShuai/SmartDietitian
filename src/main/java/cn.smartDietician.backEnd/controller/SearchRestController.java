@@ -1,6 +1,8 @@
 package cn.smartDietician.backEnd.controller;
 
 
+import cn.smartDietician.backEnd.domain.entity.CookingContent;
+import cn.smartDietician.backEnd.domain.entity.FoodContent;
 import cn.smartDietician.backEnd.domain.entity.Nutrition;
 import cn.smartDietician.backEnd.domain.entity.NutritionContent;
 import cn.smartDietician.backEnd.protocol.*;
@@ -74,7 +76,7 @@ public class SearchRestController {
     public ResponseContent getNutritionContent(@RequestBody SalerNutritionListReqData paras) {
         //初始化部分信息
         System.out.println("getTopTenFoodValitation-----------");
-        List<NutritionContent> ncl = SerachService.getTenFood(paras);
+        List<FoodContent> ncl = SerachService.getTenFood(paras);
         System.out.println(ncl.size());
         if (ncl.size()>0){
             return ResponseContent.makeSuccessResponse(ncl);
@@ -124,9 +126,10 @@ public class SearchRestController {
     @RequestMapping(value = "/Food/byId", method = RequestMethod.POST)
     public ResponseContent getFoodByID(@RequestBody SalerFoodListReqDate paras) {
         //初始化部分信息
-        System.out.println("getFoodNutritionByIdValitation-----------");
+        System.out.println("getFoodNutritionByIdValitation-----------"+paras.getFoodId());
+
         SalerFoodReqDate food=SerachService.getFoodById(paras.getFoodId());
-        if (!food.equals(new SalerFoodReqDate()))
+        if (food!=null)
             return ResponseContent.makeSuccessResponse(food);
         else
             return ResponseContent.makeFailResponse();
@@ -166,6 +169,20 @@ public class SearchRestController {
         }
         return ResponseContent.makeSuccessResponse(foodReqDateList);
     }
+
+    @RequestMapping(value = "/Food/getTopTen", method = RequestMethod.POST)
+    public ResponseContent getFoodContent(@RequestBody SalerFoodListReqDate paras) {
+        //初始化部分信息
+        System.out.println("getTopTenFoodValitation-----------");
+        List<FoodContent> fc = SerachService.getTenCooking(paras);
+        System.out.println(fc.size());
+        if (fc.size()>0){
+            return ResponseContent.makeSuccessResponse(fc);
+        }
+        else{
+            return ResponseContent.makeFailResponse();
+        }
+    }
 //########################################## 菜品 查询;DIY##############################################//
 
     /*
@@ -194,6 +211,51 @@ public class SearchRestController {
         //初始化部分信息
         System.out.println("getCookingNutritionByIdValitation-----------");
         return ResponseContent.makeSuccessResponse(SerachService.getCookingById(paras.getCookingId()));
+    }
+
+    /**
+     * 获取指定ID菜品名称
+     * /byId  POST
+     *
+     * @param paras 信息参数
+     * @return 返回的信息列表
+     */
+    @RequestMapping(value = "/Cooking/nameByUserCooking", method = RequestMethod.POST)
+    public ResponseContent getCookingNameByID(@RequestBody SalerUserCookingReqDate paras) {
+        //初始化部分信息
+        if(paras==null){
+            return ResponseContent.makeFailResponse();
+        }
+        List<CookingContent> cookingContentList= new ArrayList<>();
+        for(CookingContent c:paras.cookingContent){
+            c.cookingName = SerachService.getCookingNameById(c.cookingId);
+            cookingContentList.add(c);
+        }
+        if(cookingContentList.size()>0){
+            paras.cookingContent = cookingContentList;
+            return ResponseContent.makeSuccessResponse(paras);
+        }
+        else {
+            return ResponseContent.makeFailResponse();
+        }
+    }
+
+    /**
+     * 获取指定ID菜品名称
+     * /byId  POST
+     *
+     * @param paras 信息参数
+     * @return 返回的信息列表
+     */
+    @RequestMapping(value = "/Cooking/getTodayNutrition", method = RequestMethod.POST)
+    public ResponseContent getTodayNutrition(@RequestBody SalerUserCookingReqDate paras) {
+        //初始化部分信息
+        List<NutritionContent> nutritionContentList = SerachService.getTodayNutrition(paras);
+        if(nutritionContentList.size()>0){
+            return ResponseContent.makeSuccessResponse(nutritionContentList);
+        }else{
+            return ResponseContent.makeFailResponse();
+        }
     }
 
     /**
@@ -226,6 +288,25 @@ public class SearchRestController {
         if(session.getAttribute("User")!=null){
             userId = session.getAttribute("User").toString();
             return ResponseContent.makeSuccessResponse(SerachService.saveCooking(paras,userId));
+        }
+        else
+            return ResponseContent.makeFailResponse();
+    }
+
+    @RequestMapping(value = "/Cooking/saveMany", method = RequestMethod.POST)
+    public ResponseContent saveSomeCooking(@RequestBody List<SalerCookingReqDate> paras,
+                                       HttpServletRequest request,
+                                       HttpSession session) {
+        System.out.println("save start-----------");
+        //初始化部分信息
+        System.out.println("getSaveCookingValitation-----------");
+        String userId;
+        if(session.getAttribute("User")!=null){
+            userId = session.getAttribute("User").toString();
+            for(SalerCookingReqDate para : paras){
+                SerachService.saveCooking(para,userId);
+            }
+            return ResponseContent.makeSuccessResponse("success");
         }
         else
             return ResponseContent.makeFailResponse();

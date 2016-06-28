@@ -16,22 +16,17 @@ public class DieticianUrlController {
         return "homePage1";
     }
 
-    @RequestMapping("/food")
-    public String foodDetail() {
-        return "fooddetail";
-    }
-
-    @RequestMapping("/DiyCooking")
-    public String diyCooking() { return "DiyCooking";}
-
     @RequestMapping("/personalcenter")
     public String personalcenter() { return "personalcenter"; }
+
+    @RequestMapping("/smartCatering")
+    public String smartCatering() { return "smartCatering"; }
 
     @RequestMapping("/register")
     public String register(){ return "register";}
 
-    @RequestMapping("/signIn")
-    public String signin(){ return "signIn";}
+    @RequestMapping("/login")
+    public String signin(){ return "login";}
 
     @RequestMapping(value = "/search",method= RequestMethod.POST)
     public String search(@RequestParam(value = "searchContent",
@@ -67,6 +62,20 @@ public class DieticianUrlController {
         System.out.println(content);
         model.addAttribute("foodId",content);
         return "foodDetail";
+    }
+
+    @RequestMapping(value = "/cookingDetail",method= RequestMethod.POST)
+    public String searchCooking(@RequestParam(value = "cookingId",
+            required=true) String content, Model model)
+    {
+        System.out.println(content);
+        model.addAttribute("cookingId",content);
+        return "cookingDetail";
+    }
+
+    @RequestMapping("/diyCooking")
+    public String diyCooking() {
+        return "diyCooking";
     }
 
     @RequestMapping("/marster/test")

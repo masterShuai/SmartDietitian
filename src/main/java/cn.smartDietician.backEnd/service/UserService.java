@@ -27,9 +27,8 @@ import java.util.*;
 @Service
 @CacheConfig(cacheNames = {
         "doLogin",
-        "isUserIdExist",
-        "getUserById",
-        "getTodayDiet"
+        "getUserById"
+        //,"getTodayDiet"
 })
 public class UserService {
     @Autowired
@@ -132,7 +131,7 @@ public class UserService {
             unm = userNutritionMinList.get(i);
             if(unm.getUionPK().getUserId().equals(id)){
                 nc = new NutritionContent();
-                nc.nutritionId = unm.getUionPK().getUserId();
+                nc.nutritionId = unm.getUionPK().getNutritionId();
                 nc.content = unm.getContent();
                 nmin.add(nc);
             }
@@ -148,7 +147,6 @@ public class UserService {
      * @param ID
      * @return 存在为true;不存在为false
      */
-    @Cacheable({"isUserIdExist"})
     public boolean isExist(String ID) {
         if (UserIdPassword.get(ID) != null) {
             return true;
@@ -162,11 +160,12 @@ public class UserService {
      * @param id
      * @return
      */
-    @Cacheable({"getTodayDiet"})
+//    @Cacheable({"getTodayDiet"})
     public SalerUserCookingReqDate getTodayDiet(String id){
         SalerUserCookingReqDate salerUserCookingReqDate = new SalerUserCookingReqDate();
         Date today = new Date();
         User_Cooking uc= new User_Cooking();
+        salerUserCookingReqDate.cookingContent = new ArrayList<>();
         for(int i=0;i<userCookingList.size();i++)
         {
             uc = userCookingList.get(i);
@@ -181,6 +180,12 @@ public class UserService {
         return salerUserCookingReqDate;
     }
 
+    /**
+     * 向今日饮食计划中添加一道菜品
+     * @param userId
+     * @param cookingContent
+     * @return
+     */
     public boolean addTodayDiet(String userId,CookingContent cookingContent){
         boolean result = false;
         User_Cooking userCooking = new User_Cooking();
@@ -259,7 +264,10 @@ public class UserService {
 
             //save
             userList.add(newUser);
+            UserIdPassword.put(newUser.getId(), newUser.getPassword());
             // System.out.println("用户存入内存");
+
+
             userRepository.save(newUser);
            // System.out.println("用户写入成功");
 
@@ -287,6 +295,7 @@ public class UserService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println(e.toString());
+            System.out.println("state:"+state);
             try {
                 if (state >= 1){
                     userRepository.delete(newUser);

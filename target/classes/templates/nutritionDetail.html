@@ -33,6 +33,8 @@
     <title>营养元素详细</title>
 </head>
 <body ng-app="smartDietitian" ng-controller="HomeController" ng-init="nutritionDetail()">
+<script src="http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.js"></script>
+<link href='http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.css' rel='stylesheet' />
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -49,7 +51,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" style="color: #ffffff">返回首页</a></li>
+                <li><a href="/" style="color: #ffffff">返回首页</a></li>
                 <li><a href="#" onClick="javascript :history.back(-1);"  style="color: #ffffff">返回上一页</a></li>
                 <li><a href="{{navPage}}" style="color: #ffffff">{{navigation()}}</a></li>
             </ul>
@@ -73,7 +75,7 @@
                详情页面
             </h3>
             <dl class="dl-horizontal">
-                <p><span class="badge" contenteditable="true" style="background-color:#e7e7e7">
+                <p><span class="badge" contenteditable="true" style="background-color:orange;font-size: medium">
                         营养元素信息
                     </span></p>
                 <dt>营养元素名称:</dt>
@@ -86,10 +88,9 @@
                 <dd>{{theNutrition.excess_harm}}</dd>
                 <dt>富含该营养元素的食材:</dt>
                 <dd>{{theNutrition.contain_food}}</dd>
-
             </dl>
             <hr/>
-            <p><span class="badge" contenteditable="true" style="background-color:#e7e7e7">
+            <p><span class="badge" contenteditable="true" style="background-color:orange;font-size: medium">
                         每100克食材中该营养元素含量TOP10
             </span></p>
             <table class="table table-bordered table-hover">
@@ -104,18 +105,27 @@
                     <th>
                         每百克含量
                     </th>
+                    <th>
+                        快捷跳转
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="warning" ng-repeat="item in nutritionContentList">
+                <tr class="warning" ng-repeat="item in foodContentList">
                     <td>
                         {{$index+1}}
                     </td>
                     <td>
-                        {{item.nutritionName}}
+                        {{item.foodName}}
                     </td>
                     <td>
                         {{item.content}}{{theNutrition.unit}}
+                    </td>
+                    <td>
+                        <form action="foodDetail" method="post" target="_blank">
+                            <input type="text" name="foodId"  value=" {{item.foodId}}"   style="visibility: hidden;width: 0px"/>
+                            <button type="submit" style="color: #ffffff;background-color: darkorange;border: none">查看详情</button>
+                        </form>
                     </td>
                 </tr>
 

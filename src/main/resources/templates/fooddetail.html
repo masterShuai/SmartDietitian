@@ -36,6 +36,8 @@
     <title>食材详细</title>
 </head>
 <body ng-app="smartDietitian" ng-controller="HomeController" ng-init="foodDetail()">
+<script src="http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.js"></script>
+<link href='http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.css' rel='stylesheet' />
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -53,7 +55,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" style="color: #ffffff">返回首页</a></li>
+                <li><a href="/" style="color: #ffffff">返回首页</a></li>
                 <li><a href="#" onClick="javascript :history.back(-1);" style="color: #ffffff">返回上一页</a></li>
                 <li><a href="{{navPage}}" style="color: #ffffff">{{navigation()}}</a></li>
             </ul>
@@ -78,9 +80,10 @@
             <h3>
                 详情页面
             </h3>
+
             <div class="col-md-8">
                 <dl class="dl-horizontal">
-                    <p><span class="badge" contenteditable="true" style="background-color:orange">
+                    <p><span class="badge" contenteditable="true" style="background-color:orange;font-size: medium">
                         食材信息
                     </span></p>
                     <dt>食材名称:</dt>
@@ -98,54 +101,69 @@
                     <dt>可否生食:</dt>
                     <dd>{{theFood.can_eat}}</dd>
                 </dl>
+                <p><span class="badge" contenteditable="true" style="background-color:orange;font-size: medium">
+                    每菜品中中该食材用量TOP10
+                </span></p>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            排名
+                        </th>
+                        <th>
+                            菜品名称
+                        </th>
+                        <th>
+                            食材用量
+                        </th>
+                        <th>
+                            快捷跳转
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="warning" ng-repeat="item in foodContentList">
+                        <td>
+                            {{$index+1}}
+                        </td>
+                        <td>
+                            {{item.foodName}}
+                        </td>
+                        <td>
+                            {{item.content}}克
+                        </td>
+                        <td>
+                            <form action="cookingDetail" method="post" target="_blank">
+                                <input type="text" name="cookingId"  value=" {{item.foodId}}"   style="visibility: hidden;width: 0px"/>
+                                <button type="submit" style="color: #ffffff;background-color: darkorange;border: none">查看详情</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="col-md-4">
                 <div class="row-fluid">
-                    <p><span class="badge" contenteditable="true" style="background-color:orange">营养元素含量</span></p>
+                    <p><span class="badge" contenteditable="true" style="background-color:orange;font-size: medium">
+                        营养元素含量
+                    </span></p>
                     <ul ng-repeat="item in theFood.nutritionContent">
-                        <li>{{item.nutritionName}}:{{item.content}}{{item.nutritionUnit}}</li>
+                        <li>
+                           <span>{{item.nutritionName}}:</span>
+                            {{item.content}}{{item.nutritionUnit}}
+                        </li>
                     </ul>
+                </div>
             </div>
             <hr/>
-            <h4>每菜品中中该食材用量TOP10</h4>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>
-                        排名
-                    </th>
-                    <th>
-                        食材名称
-                    </th>
-                    <th>
-                        每百克含量
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="warning" ng-repeat="item in nutritionContentList">
-                    <td>
-                        {{$index+1}}
-                    </td>
-                    <td>
-                        {{item.nutritionName}}
-                    </td>
-                    <td>
-                        {{item.content}}{{theNutrition.unit}}
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-2">
+            <div class="col-md-2">
+            </div>
         </div>
     </div>
-</div>
 
-<div style="visibility: hidden">
-    <input type="text" th:value="*{foodId}" id="foodId"/>
+    <div style="visibility: hidden">
+        <input type="text" th:value="*{foodId}" id="foodId"/>
+    </div>
 </div>
-
 </body>
 </html>

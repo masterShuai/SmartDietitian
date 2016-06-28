@@ -27,6 +27,8 @@
     </style>
 </head>
 <body ng-app="smartDietitian" ng-controller="HomeController" ng-init="search()">
+<script src="http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.js"></script>
+<link href='http://chieffancypants.github.io/angular-loading-bar/src/loading-bar.css' rel='stylesheet' />
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,7 +45,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" style="color: #ffffff">返回首页</a></li>
+                <li><a href="/" style="color: #ffffff">返回首页</a></li>
                 <li><a href="#" onClick="javascript :history.back(-1);"  style="color: #ffffff">返回上一页</a></li>
                 <li><a href="{{navPage}}" style="color: #ffffff">{{navigation()}}</a></li>
             </ul>
@@ -108,7 +110,10 @@
                                 {{item.cookingName}}
                             </td>
                             <td>
-                                <button ng-click="cookingDetail(item.cookingId)" style="color: #ffffff;background-color: darkorange;border: none">查看详情</button>
+                                <form action="cookingDetail" method="post">
+                                    <input type="text" name="cookingId"  value=" {{item.cookingId}}"   style="visibility: hidden;width: 0px"/>
+                                    <button type="submit" style="color: #ffffff;background-color: darkorange;border: none">查看详情</button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>
